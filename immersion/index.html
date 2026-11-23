@@ -267,6 +267,10 @@
     .pr-inc-label { text-align:center;font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:22px; }
     .pr-inc-list { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 40px;max-width:900px;margin:0 auto; }
     .pr-terms { max-width:760px;margin:32px auto 0;text-align:center; }
+    .pr-acc { max-width:900px;margin:clamp(32px,4vw,48px) auto 0; }
+    .pr-acc .faq-a { color:rgba(244,239,232,.72); }
+    .pr-acc .pr-inc-list { margin:0;max-width:none; }
+    @media (max-width:700px){ .pr-acc .pr-inc-list { grid-template-columns:1fr; } }
     .pr-terms-label { font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:12px; }
     .pr-terms p { font-size:13.5px;line-height:1.7;color:rgba(244,239,232,.72);margin:0 0 6px;text-wrap:pretty; }
     .pr-terms-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;text-align:left; }
@@ -923,30 +927,28 @@
         <button class="pr-cta" onClick="{{ goContact }}">Préparer mon immersion<span class="pr-arrow">→</span></button>
       </article>
     </div>
-    <div data-reveal class="pr-inc">
-      <div class="pr-inc-label">Toutes nos Immersions comprennent</div>
-      <div class="pr-inc-list">
-        <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#C41E3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Analyse préalable de votre projet et de vos besoins.</span></div>
-        <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#C41E3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Préparation d'un programme de visites personnalisé.</span></div>
-        <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#C41E3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Sélection des fabricants et organisation des rendez-vous.</span></div>
-        <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#C41E3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Accompagnement physique BEA pendant toute la durée du programme.</span></div>
-        <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#C41E3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Conseils et comparaisons des solutions sur place.</span></div>
-        <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#C41E3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Rapport de synthèse après votre Immersion.</span></div>
-      </div>
-    </div>
-    <div data-reveal class="pr-terms">
-      <div class="pr-terms-label">Modalités de réservation</div>
-      <div class="pr-terms-grid">
-        <div class="pr-term">
+    <div data-reveal class="pr-acc">
+      <details class="faq">
+        <summary class="faq-q">Ce qui est inclus dans votre Immersion<span class="faq-ic"></span></summary>
+        <div class="faq-a"><div class="pr-inc-list">
+          <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#C41E3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Analyse préalable de votre projet et de vos besoins.</span></div>
+          <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#C41E3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Préparation d'un programme de visites personnalisé.</span></div>
+          <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#C41E3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Sélection des fabricants et organisation des rendez-vous.</span></div>
+          <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#C41E3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Accompagnement physique BEA pendant toute la durée du programme.</span></div>
+          <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#C41E3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Conseils et comparaisons des solutions sur place.</span></div>
+          <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#C41E3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Rapport de synthèse après votre Immersion.</span></div>
+        </div></div>
+      </details>
+      <details class="faq">
+        <summary class="faq-q">Modalités et conditions de réservation<span class="faq-ic"></span></summary>
+        <div class="faq-a">
           <div class="pr-term-t">Paiement</div>
-          <p>50 % à la réservation, 50 % avant le début de l'Immersion. Paiement intégral possible dès la réservation.</p>
-        </div>
-        <div class="pr-term">
+          <p style="margin:0 0 18px">50 % à la réservation, 50 % avant le début de l'Immersion. Paiement intégral possible dès la réservation.</p>
           <div class="pr-term-t">Frais non inclus</div>
-          <p>Vols, hébergement, repas, visas et dépenses personnelles.</p>
-          <p>Les frais de déplacement locaux sont communiqués avant la réservation.</p>
+          <p style="margin:0 0 6px">Vols, hébergement, repas, visas et dépenses personnelles.</p>
+          <p style="margin:0">Les frais de déplacement locaux sont communiqués avant la réservation.</p>
         </div>
-      </div>
+      </details>
     </div>
   </div>
 </section>
