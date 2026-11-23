@@ -47,6 +47,7 @@
   @keyframes beaHeroIn{from{opacity:0}to{opacity:1}}
   @keyframes beaBreathe{0%,100%{filter:brightness(.2) saturate(.82)}50%{filter:brightness(.46) saturate(.95)}}
   .bea-heromarq{display:none}
+  @media(max-width:1024px){.bea-livgrid{grid-template-columns:1fr!important;max-width:620px;margin-left:auto!important;margin-right:auto!important}}
   @media(max-width:1024px){.bea-pricegrid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
   @media(max-width:860px){.bea-incl{grid-template-columns:1fr!important}}
   @media(max-width:1024px){.bea-steps4{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
@@ -110,6 +111,7 @@
     .bea-heroimg{height:360px!important}
   }
   /* ---- Mobile ---- */
+  @media(max-width:1024px){.bea-livgrid{grid-template-columns:1fr!important;max-width:620px;margin-left:auto!important;margin-right:auto!important}}
   @media(max-width:1024px){.bea-pricegrid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
   @media(max-width:860px){.bea-incl{grid-template-columns:1fr!important}}
   @media(max-width:1024px){.bea-steps4{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
@@ -288,26 +290,34 @@
 </section>
 
 <section id="livrables" class="bea-sec" style="margin-top:72px;padding:72px 80px 0">
-  <div style="max-width:1080px;margin:0 auto">
+  <div style="max-width:1240px;margin:0 auto">
     <h2 class="bea-reveal" style="margin:0 auto;font-size:clamp(28px,3.2vw,44px);font-weight:700;line-height:1.16;letter-spacing:-.015em;max-width:600px;text-align:center;text-wrap:balance">Votre <span style="font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:1.1em;color:#C41E3A">feuille de route</span>, prête à être exploitée.</h2>
     <p class="bea-reveal" style="margin:18px auto 0;max-width:540px;text-align:center;font-size:15px;line-height:1.62;color:rgba(244,239,232,.6)">Une vision complète et documentée de vos finitions, de leur sélection à leur chiffrage.</p>
-    <div class="bea-reveal bea-g2" style="margin-top:40px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px">
-      <div class="bea-recv" style="display:flex;flex-direction:column;padding:34px 32px 36px;background:#0B0B0B;border:1px solid rgba(255,255,255,.07);border-radius:24px;text-align:left">
-        <div style="display:flex;align-items:center;gap:14px">
-          <span style="display:inline-flex;align-items:center;justify-content:center;flex:none;width:48px;height:48px;border-radius:13px;background:#C41E3A;box-shadow:0 4px 14px rgba(196,30,58,.35);font-size:16px;font-weight:800;color:#fff">01</span>
-          <span style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,239,232,.45)">Livrable</span>
-        </div>
-        <div style="margin-top:24px;font-size:clamp(20px,2vw,24px);font-weight:700;letter-spacing:-.015em;line-height:1.2;color:#F4EFE8">Dossier de Finition</div>
-        <p style="margin:12px 0 0;font-size:14.5px;line-height:1.62;color:rgba(244,239,232,.6)">Un dossier visuel et technique présentant, lot par lot, les matériaux sélectionnés, leurs références, leurs caractéristiques et les fabricants retenus.</p>
-      </div>
-      <div class="bea-recv" style="display:flex;flex-direction:column;padding:34px 32px 36px;background:#0B0B0B;border:1px solid rgba(255,255,255,.07);border-radius:24px;text-align:left">
-        <div style="display:flex;align-items:center;gap:14px">
-          <span style="display:inline-flex;align-items:center;justify-content:center;flex:none;width:48px;height:48px;border-radius:13px;background:#C41E3A;box-shadow:0 4px 14px rgba(196,30,58,.35);font-size:16px;font-weight:800;color:#fff">02</span>
-          <span style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,239,232,.45)">Livrable</span>
-        </div>
-        <div style="margin-top:24px;font-size:clamp(20px,2vw,24px);font-weight:700;letter-spacing:-.015em;line-height:1.2;color:#F4EFE8">Dossier de chiffrage consolidé</div>
-        <p style="margin:12px 0 0;font-size:14.5px;line-height:1.62;color:rgba(244,239,232,.6)">L’ensemble des devis fabricants, organisés par lot, avec les références, quantités et prix fournisseurs, complété par une simulation logistique pour estimer le coût global de vos achats.</p>
-      </div>
+    <div class="bea-reveal bea-livgrid" style="margin-top:40px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
+      <figure class="bea-recv" style="margin:0;display:flex;flex-direction:column;background:#0B0B0B;border:1px solid rgba(255,255,255,.07);border-radius:24px;overflow:hidden;text-align:left">
+        <div style="position:relative;background:#050505"><img src="media/livrable-finition.png" loading="lazy" decoding="async" alt="Exemple de Dossier de Finition BEA" style="display:block;width:100%;height:auto"><div style="position:absolute;left:0;right:0;bottom:0;height:28%;background:linear-gradient(180deg,transparent,#0B0B0B);pointer-events:none"></div></div>
+        <figcaption style="padding:6px 26px 28px">
+          <div style="display:flex;align-items:center;gap:12px"><span style="font-size:12px;font-weight:800;color:#C41E3A;letter-spacing:.06em">01</span><span style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,239,232,.45)">Livrable</span></div>
+          <div style="margin-top:10px;font-size:clamp(19px,1.8vw,22px);font-weight:700;letter-spacing:-.015em;line-height:1.2;color:#F4EFE8">Dossier de Finition</div>
+          <p style="margin:10px 0 0;font-size:14px;line-height:1.58;color:rgba(244,239,232,.6)">Un dossier visuel et technique présentant, lot par lot, les matériaux sélectionnés, leurs références, leurs caractéristiques et les fabricants retenus.</p>
+        </figcaption>
+      </figure>
+      <figure class="bea-recv" style="margin:0;display:flex;flex-direction:column;background:#0B0B0B;border:1px solid rgba(255,255,255,.07);border-radius:24px;overflow:hidden;text-align:left">
+        <div style="position:relative;background:#050505"><img src="media/livrable-chiffrage.png" loading="lazy" decoding="async" alt="Exemple de tableau de chiffrage consolidé BEA" style="display:block;width:100%;height:auto"><div style="position:absolute;left:0;right:0;bottom:0;height:28%;background:linear-gradient(180deg,transparent,#0B0B0B);pointer-events:none"></div></div>
+        <figcaption style="padding:6px 26px 28px">
+          <div style="display:flex;align-items:center;gap:12px"><span style="font-size:12px;font-weight:800;color:#C41E3A;letter-spacing:.06em">02</span><span style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,239,232,.45)">Livrable</span></div>
+          <div style="margin-top:10px;font-size:clamp(19px,1.8vw,22px);font-weight:700;letter-spacing:-.015em;line-height:1.2;color:#F4EFE8">Dossier de chiffrage consolidé</div>
+          <p style="margin:10px 0 0;font-size:14px;line-height:1.58;color:rgba(244,239,232,.6)">L’ensemble des devis fabricants, organisés par lot, avec les références, quantités et prix fournisseurs.</p>
+        </figcaption>
+      </figure>
+      <figure class="bea-recv" style="margin:0;display:flex;flex-direction:column;background:#0B0B0B;border:1px solid rgba(255,255,255,.07);border-radius:24px;overflow:hidden;text-align:left">
+        <div style="position:relative;background:#050505"><img src="media/livrable-logistique.png" loading="lazy" decoding="async" alt="Exemple de simulation logistique BEA" style="display:block;width:100%;height:auto"><div style="position:absolute;left:0;right:0;bottom:0;height:28%;background:linear-gradient(180deg,transparent,#0B0B0B);pointer-events:none"></div></div>
+        <figcaption style="padding:6px 26px 28px">
+          <div style="display:flex;align-items:center;gap:12px"><span style="font-size:12px;font-weight:800;color:#C41E3A;letter-spacing:.06em">03</span><span style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,239,232,.45)">Livrable</span></div>
+          <div style="margin-top:10px;font-size:clamp(19px,1.8vw,22px);font-weight:700;letter-spacing:-.015em;line-height:1.2;color:#F4EFE8">Simulation logistique</div>
+          <p style="margin:10px 0 0;font-size:14px;line-height:1.58;color:rgba(244,239,232,.6)">Une estimation des volumes, du transport et des coûts logistiques pour évaluer le coût global de vos achats.</p>
+        </figcaption>
+      </figure>
     </div>
   </div>
 </section>
