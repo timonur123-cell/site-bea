@@ -10,7 +10,7 @@
 <helmet>
   <template id="__bundler_thumbnail">
     <div style="width:100%;height:100%;background:#050505;display:flex;align-items:center;justify-content:center">
-      <div style="font-family:sans-serif;font-size:38px;font-weight:800;color:#F4EFE8;letter-spacing:-.04em">bea<span style="color:#C41E3A">.</span></div>
+      <div style="font-family:sans-serif;font-size:38px;font-weight:800;color:#F4EFE8;letter-spacing:-.04em">bea<span style="color:#EF3340">.</span></div>
     </div>
   </template>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,10 +42,10 @@
       -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
     }
-    ::selection { background: rgba(196,30,58,.22); }
+    ::selection { background: rgba(239,51,64,.22); }
     :root {
-      --red: #C41E3A;
-      --red-glow: rgba(196,30,58,0.38);
+      --red: #EF3340;
+      --red-glow: rgba(239,51,64,0.38);
       --bg: #050505;
       --card: #0B0B0B;
       --white: #F4EFE8;
@@ -78,36 +78,32 @@
       100% { transform: translate(-50%,-50%) rotate(360deg); }
     }
     @keyframes neonPulse {
-      0%,100% { box-shadow:0 0 18px rgba(196,30,58,.55),0 0 40px rgba(196,30,58,.22); }
-      50%      { box-shadow:0 0 28px rgba(196,30,58,.85),0 0 60px rgba(196,30,58,.4); }
+      0%,100% { box-shadow:0 0 18px rgba(239,51,64,.5),0 0 40px rgba(239,51,64,.2); }
+      50%      { box-shadow:0 0 28px rgba(239,51,64,.8),0 0 60px rgba(239,51,64,.35); }
     }
     .split-cta {
       position:relative;display:inline-flex;align-items:center;justify-content:center;
-      background:var(--red);border:none;border-radius:50px;
-      height:52px;min-width:260px;padding:0 24px 0 64px;
-      font-family:inherit;font-size:16px;font-weight:600;color:#fff;
-      cursor:pointer;overflow:hidden;
-      animation:neonPulse 2.8s ease-in-out infinite;
-      transition:padding 520ms cubic-bezier(.4,0,.2,1);
+      background:#EF3340;border:none;border-radius:50px;
+      height:52px;min-width:260px;padding:0 28px 0 76px;
+      font-family:'Inter',sans-serif;font-size:16px;font-weight:600;color:#fff;
+      cursor:pointer;overflow:hidden;box-shadow:none;
+      transition:padding 520ms cubic-bezier(.4,0,.2,1),box-shadow 320ms ease;
     }
-    .split-cta.hovered { padding:0 72px 0 28px; }
+    .split-cta:hover, .split-cta.hovered { padding:0 80px 0 28px;animation:neonPulse 2.8s ease-in-out infinite; }
     .split-cta-badge {
-      position:absolute;left:5px;top:5px;
-      width:42px;height:42px;border-radius:50%;
-      background:#111;display:flex;align-items:center;justify-content:center;
+      position:absolute;left:3px;top:3px;width:52px;height:calc(100% - 6px);
       border-radius:50px 0 0 50px;
-      transition:left 520ms cubic-bezier(.4,0,.2,1),border-radius 520ms ease;
-      flex-shrink:0;
+      background:linear-gradient(135deg,#050505 0%,#151515 60%,#1f1f1f 100%);
+      display:flex;align-items:center;justify-content:center;
+      transition:left 520ms cubic-bezier(.4,0,.2,1),border-radius 520ms cubic-bezier(.4,0,.2,1);
     }
-    .split-cta.hovered .split-cta-badge { left:calc(100% - 47px);border-radius:0 50px 50px 0; }
-    .split-cta-letter { font-family:'Inter',sans-serif;font-style:normal;font-weight:900;color:var(--red);font-size:22px;position:absolute;transition:opacity 200ms;letter-spacing:-.02em; }
-    .split-cta-arrow  { color:var(--red);font-size:18px;position:absolute;opacity:0;transition:opacity 200ms 100ms;font-weight:700; }
-    .split-cta.hovered .split-cta-letter { opacity:0; }
-    .split-cta.hovered .split-cta-arrow  { opacity:1; }
+    .split-cta:hover .split-cta-badge, .split-cta.hovered .split-cta-badge { left:calc(100% - 55px);border-radius:0 50px 50px 0; }
+    .split-cta-letter { display:none; }
+    .split-cta-arrow  { color:#EF3340;font-size:18px;font-weight:700;line-height:1;opacity:1 !important; }
 
     /* Rolling counter */
     .rc-wrap { position:relative;display:inline-flex;padding:2px;border-radius:18px;overflow:hidden;margin-bottom:22px; }
-    .rc-spin  { position:absolute;top:50%;left:50%;width:350%;height:350%;background:conic-gradient(from 0deg at 50% 50%,transparent 0deg,transparent 310deg,rgba(196,30,58,.45) 328deg,#C41E3A 345deg,rgba(196,30,58,.45) 358deg,transparent 360deg);animation:cardBorderRun 4s linear infinite;pointer-events:none; }
+    .rc-spin  { position:absolute;top:50%;left:50%;width:350%;height:350%;background:conic-gradient(from 0deg at 50% 50%,transparent 0deg,transparent 310deg,rgba(239,51,64,.45) 328deg,#EF3340 345deg,rgba(239,51,64,.45) 358deg,transparent 360deg);animation:cardBorderRun 4s linear infinite;pointer-events:none; }
     .rc-inner { position:relative;z-index:1;background:#0A0A0A;border-radius:16px;padding:22px 26px 18px;display:flex;flex-direction:column;align-items:center;gap:14px; }
     .rc-slots { display:flex;gap:8px;align-items:center; }
     .rc-slot  { width:54px;height:66px;background:#161616;border-radius:10px;overflow:hidden;position:relative; }
@@ -150,7 +146,7 @@
     .tc-cap-item span.t { font-size:14px;font-weight:500;color:rgba(244,239,232,.92);letter-spacing:-.005em; }
     @keyframes tcProgress { from{transform:scaleX(0)} to{transform:scaleX(1)} }
     .tc-progress { position:absolute;left:0;right:0;bottom:0;height:2px;z-index:6;background:rgba(255,255,255,.12); }
-    .tc-progress-bar { height:100%;background:var(--red);transform-origin:left;transform:scaleX(0);animation:tcProgress 3s linear infinite;box-shadow:0 0 10px rgba(196,30,58,.7); }
+    .tc-progress-bar { height:100%;background:var(--red);transform-origin:left;transform:scaleX(0);animation:tcProgress 3s linear infinite;box-shadow:0 0 10px rgba(239,51,64,.7); }
     .tc-index { position:absolute;top:22px;right:22px;z-index:5;display:flex;align-items:center;font-size:12px;font-weight:600;letter-spacing:.06em;color:rgba(244,239,232,.6); }
     .tc-index .nw { position:relative;display:inline-block;width:16px;height:16px; }
     .tc-index .nw span { position:absolute;right:0;top:0;opacity:0;color:var(--white);animation:capFade 15s infinite; }
@@ -194,7 +190,7 @@
     .faq[open] .faq-ic { transform:rotate(180deg); }
     /* Crédit Immersion */
     .cr-wrap { display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,5vw,80px);align-items:start; }
-    .cr-highlight { display:flex;align-items:center;gap:22px;padding:24px 26px;border:1px solid rgba(196,30,58,.45);border-radius:20px;background:linear-gradient(135deg,rgba(196,30,58,.1),rgba(196,30,58,.015) 70%); }
+    .cr-highlight { display:flex;align-items:center;gap:22px;padding:24px 26px;border:1px solid rgba(239,51,64,.45);border-radius:20px;background:linear-gradient(135deg,rgba(239,51,64,.1),rgba(239,51,64,.015) 70%); }
     .cr-big { font-size:clamp(52px,5.4vw,76px);font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--white);flex-shrink:0; }
     .cr-big span { color:var(--red);font-size:.6em;margin-left:2px; }
     .cr-highlight p { font-size:15px;line-height:1.6;color:var(--dim);margin:0; }
@@ -206,11 +202,11 @@
     .cr-dest { font-weight:600;color:var(--white); }
     .cr-price { color:var(--dim); }
     .cr-credit { font-weight:700;color:var(--white); }
-    .cr-row:not(.cr-head) .cr-credit { color:#fff;text-shadow:0 0 18px rgba(196,30,58,.35); }
+    .cr-row:not(.cr-head) .cr-credit { color:#fff;text-shadow:0 0 18px rgba(239,51,64,.35); }
     .cr-how { padding:24px 26px;border:1px solid rgba(255,255,255,.08);border-radius:20px; }
     .cr-step { display:grid;grid-template-columns:30px 1fr;gap:14px;align-items:start;margin-top:14px; }
     .cr-step:first-of-type { margin-top:0; }
-    .cr-step-n { width:28px;height:28px;border-radius:50%;border:1px solid rgba(196,30,58,.6);display:flex;align-items:center;justify-content:center;font-size:10.5px;letter-spacing:.02em;font-weight:700;color:var(--white); }
+    .cr-step-n { width:28px;height:28px;border-radius:50%;border:1px solid rgba(239,51,64,.6);display:flex;align-items:center;justify-content:center;font-size:10.5px;letter-spacing:.02em;font-weight:700;color:var(--white); }
     .cr-step p { font-size:14px;line-height:1.7;color:var(--dim);margin:3px 0 0; }
     @media (max-width:860px){
       .cr-wrap { grid-template-columns:1fr; }
@@ -222,11 +218,11 @@
     .jt-tab:hover { color:var(--white);background:rgba(255,255,255,.03); }
     .jt-tab-name { font-size:14.5px;font-weight:700;letter-spacing:-.005em; }
     .jt-tab-price { font-size:13px;font-weight:500;opacity:.8; }
-    .jt-on { color:var(--white);background:rgba(196,30,58,.1);border-color:rgba(196,30,58,.55); }
+    .jt-on { color:var(--white);background:rgba(239,51,64,.1);border-color:rgba(239,51,64,.55); }
     .jt-on .jt-tab-price { color:var(--red);opacity:1;font-weight:600; }
     .jt-panel { max-width:720px;margin:0 auto; }
     .jt-line { position:relative;padding-left:36px;animation:jtIn 420ms cubic-bezier(.2,.7,.2,1); }
-    .jt-line::before { content:"";position:absolute;left:7px;top:8px;bottom:8px;width:1px;background:linear-gradient(to bottom,var(--red),rgba(196,30,58,.3) 45%,rgba(255,255,255,.08)); }
+    .jt-line::before { content:"";position:absolute;left:7px;top:8px;bottom:8px;width:1px;background:linear-gradient(to bottom,var(--red),rgba(239,51,64,.3) 45%,rgba(255,255,255,.08)); }
     @keyframes jtIn { from { opacity:0;transform:translateY(10px); } to { opacity:1;transform:none; } }
     .jt-step { position:relative;padding-bottom:clamp(26px,3vw,36px); }
     .jt-step:last-child { padding-bottom:0; }
@@ -245,8 +241,8 @@
     .pr-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,24px);align-items:stretch; }
     .pr-card { position:relative;display:flex;flex-direction:column;padding:clamp(28px,2.6vw,36px);border:1px solid rgba(255,255,255,.08);border-radius:22px;background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.008));transition:border-color 300ms ease,transform 300ms ease; }
     .pr-card:hover { border-color:rgba(255,255,255,.16);transform:translateY(-4px); }
-    .pr-featured { border-color:rgba(196,30,58,.6);background:linear-gradient(180deg,rgba(196,30,58,.07),rgba(196,30,58,.01) 55%);box-shadow:0 30px 70px -40px rgba(196,30,58,.45); }
-    .pr-featured:hover { border-color:rgba(196,30,58,.85); }
+    .pr-featured { border-color:rgba(239,51,64,.6);background:linear-gradient(180deg,rgba(239,51,64,.07),rgba(239,51,64,.01) 55%);box-shadow:0 30px 70px -40px rgba(239,51,64,.45); }
+    .pr-featured:hover { border-color:rgba(239,51,64,.85); }
     .pr-top { display:flex;align-items:center;gap:12px;margin-bottom:26px; }
     .pr-num { font-size:12px;font-weight:700;letter-spacing:.12em;color:var(--red); }
     .pr-dest { font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.75); }
@@ -258,9 +254,9 @@
     .pr-ideal { margin-top:auto;padding-top:18px;border-top:1px solid rgba(255,255,255,.08);font-size:13.5px;line-height:1.65;color:rgba(255,255,255,.7);margin-bottom:26px; }
     .pr-ideal span { display:block;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:6px; }
     .pr-cta { display:flex;align-items:center;justify-content:space-between;width:100%;padding:15px 22px;border-radius:50px;border:1px solid rgba(255,255,255,.18);background:transparent;color:var(--white);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:all 250ms ease; }
-    .pr-cta:hover { border-color:var(--red);background:rgba(196,30,58,.12); }
+    .pr-cta:hover { border-color:var(--red);background:rgba(239,51,64,.12); }
     .pr-featured .pr-cta { background:var(--red);border-color:var(--red); }
-    .pr-featured .pr-cta:hover { box-shadow:0 0 30px rgba(196,30,58,.5); }
+    .pr-featured .pr-cta:hover { box-shadow:0 0 30px rgba(239,51,64,.5); }
     .pr-arrow { transition:transform 250ms ease; }
     .pr-cta:hover .pr-arrow { transform:translateX(4px); }
     .pr-inc { margin-top:clamp(28px,3.5vw,44px);padding:clamp(24px,3vw,36px);border:1px solid rgba(255,255,255,.08);border-radius:22px; }
@@ -286,10 +282,10 @@
     .tl-wrap { max-width:1180px;margin:0 auto;display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(36px,6vw,104px);align-items:start; }
     .tl-head { position:sticky;top:120px; }
     .tl-list { position:relative; }
-    .tl-list::before { content:"";position:absolute;left:21px;top:22px;bottom:22px;width:1px;background:linear-gradient(to bottom,var(--red),rgba(196,30,58,.35) 40%,rgba(255,255,255,.08)); }
+    .tl-list::before { content:"";position:absolute;left:21px;top:22px;bottom:22px;width:1px;background:linear-gradient(to bottom,var(--red),rgba(239,51,64,.35) 40%,rgba(255,255,255,.08)); }
     .tl-step { position:relative;display:grid;grid-template-columns:44px 1fr;gap:24px;padding-bottom:clamp(32px,4vw,48px); }
     .tl-step:last-child { padding-bottom:0; }
-    .tl-dot { position:relative;z-index:1;width:44px;height:44px;border-radius:50%;background:#0b0b0b;border:1px solid rgba(196,30,58,.55);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 6px var(--bg); }
+    .tl-dot { position:relative;z-index:1;width:44px;height:44px;border-radius:50%;background:#0b0b0b;border:1px solid rgba(239,51,64,.55);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 6px var(--bg); }
     .tl-dot span { font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--white); }
     .tl-step:hover .tl-dot { background:var(--red);border-color:var(--red); }
     .tl-body { padding-top:9px; }
@@ -346,11 +342,11 @@
     .vccd-card:hover .vccd-media img { transform:scale(1.06); filter:saturate(1.05) contrast(1.03) brightness(1.04); }
     .vccd-card:hover .vccd-media::after { opacity:.55; }
     .vccd-card { position:relative; overflow:hidden; border:1px solid rgba(255,255,255,.08); border-radius:22px; padding:16px 16px 28px; transition:border-color 340ms ease, transform 340ms ease, box-shadow 340ms ease; }
-    .vccd-card:hover { border-color:rgba(196,30,58,.55); transform:translateY(-6px); box-shadow:0 30px 60px -30px rgba(0,0,0,.85),0 0 0 1px rgba(196,30,58,.12); }
+    .vccd-card:hover { border-color:rgba(239,51,64,.55); transform:translateY(-6px); box-shadow:0 30px 60px -30px rgba(0,0,0,.85),0 0 0 1px rgba(239,51,64,.12); }
     .vccd-watermark { position:absolute; top:calc(clamp(200px,22vw,300px) - 34px); right:8px; font-family:'Inter',sans-serif; font-size:clamp(80px,9vw,132px); font-weight:800; line-height:.8; letter-spacing:-.04em; color:rgba(255,255,255,.04); pointer-events:none; z-index:0; transition:color 400ms ease; }
-    .vccd-card:hover .vccd-watermark { color:rgba(196,30,58,.09); }
+    .vccd-card:hover .vccd-watermark { color:rgba(239,51,64,.09); }
     .vccd-body { position:relative; z-index:1; }
-    .vccd-sep { height:1px; margin:20px 6px 16px; background:linear-gradient(to right,rgba(196,30,58,.5),rgba(255,255,255,.05) 60%,transparent); }
+    .vccd-sep { height:1px; margin:20px 6px 16px; background:linear-gradient(to right,rgba(239,51,64,.5),rgba(255,255,255,.05) 60%,transparent); }
     .vccd-num { font-size:12px; font-weight:700; letter-spacing:.14em; color:var(--red); margin:0 6px 12px; }
     .vccd-card h3 { transition:transform 340ms cubic-bezier(.4,0,.2,1); }
     .vccd-card:hover h3 { transform:translateX(4px); }
@@ -366,7 +362,7 @@
     .po-day { background:var(--red);color:#fff;font-size:10px;font-weight:700;letter-spacing:.08em;padding:4px 9px;border-radius:5px; }
     .po-cat { font-size:12px;font-weight:600;color:rgba(255,255,255,.82); }
     .po-pin { position:absolute;z-index:3;display:flex;align-items:center;gap:7px;transform:translate(-50%,-50%); }
-    .po-num { width:24px;height:24px;border-radius:50%;background:var(--red);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 10px rgba(196,30,58,.5); }
+    .po-num { width:24px;height:24px;border-radius:50%;background:var(--red);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 10px rgba(239,51,64,.5); }
     .po-txt { font-size:10.5px;line-height:1.25;color:#fff;white-space:nowrap; }
     .po-txt span { color:rgba(255,255,255,.55); }
     .po-route { position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none; }
@@ -378,7 +374,7 @@
     @keyframes playPulse { 0%{box-shadow:0 0 0 0 rgba(255,255,255,.25)} 70%{box-shadow:0 0 0 18px rgba(255,255,255,0)} 100%{box-shadow:0 0 0 0 rgba(255,255,255,0)} }
     .immersion-play-ring { animation:playPulse 2.4s ease-out infinite; }
     #immersionPlay:hover .immersion-play-ring { background:rgba(255,255,255,.16); transform:scale(1.06); transition:transform 300ms ease,background 300ms ease; }
-    .immersion-beam::before { content:"";position:absolute;top:50%;left:50%;width:200%;height:200%;transform:translate(-50%,-50%);z-index:0;background:conic-gradient(from 0deg at 50% 50%,transparent 0deg,transparent 292deg,rgba(196,30,58,.4) 316deg,#ff2e46 344deg,rgba(196,30,58,.4) 356deg,transparent 360deg);animation:immBeam 4.5s linear infinite; }
+    .immersion-beam::before { content:"";position:absolute;top:50%;left:50%;width:200%;height:200%;transform:translate(-50%,-50%);z-index:0;background:conic-gradient(from 0deg at 50% 50%,transparent 0deg,transparent 292deg,rgba(239,51,64,.4) 316deg,#ff2e46 344deg,rgba(239,51,64,.4) 356deg,transparent 360deg);animation:immBeam 4.5s linear infinite; }
     @keyframes immBeam { to { transform:translate(-50%,-50%) rotate(360deg); } }
     .kpi-dot { width:0;flex-shrink:0;margin:0 -6px;align-self:center; }
     @media (max-width:768px){
@@ -613,9 +609,7 @@
     <!-- CTAs -->
     <div data-hero-cta="" style="display:flex;flex-direction:column;align-items:center;gap:28px">
       <button class="split-cta" data-split-cta="" onClick="{{ goFormules }}">
-        <div class="split-cta-badge">
-          <span class="split-cta-arrow" style="opacity:1;display:flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="var(--red)" style="transform:rotate(45deg)"><path d="M21 16v-2l-8-5V3.5A1.5 1.5 0 0 0 11.5 2 1.5 1.5 0 0 0 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg></span>
-        </div>
+        <div class="split-cta-badge"><span class="split-cta-arrow">→</span></div>
         Préparer mon immersion
       </button>
 
@@ -636,7 +630,7 @@
      02 — CHOIX SUR PLACE
 ═══════════════════════════════════════════ -->
 <section style="position:relative;padding:var(--spv) var(--sph);background:var(--bg);overflow:hidden">
-  <div style="position:absolute;top:8%;left:50%;transform:translateX(-50%);width:80%;height:40%;background:radial-gradient(ellipse,rgba(196,30,58,.06) 0%,transparent 65%);pointer-events:none"></div>
+  <div style="position:absolute;top:8%;left:50%;transform:translateX(-50%);width:80%;height:40%;background:radial-gradient(ellipse,rgba(239,51,64,.06) 0%,transparent 65%);pointer-events:none"></div>
   <div style="position:relative;max-width:1240px;margin:0 auto">
     <div class="sp-head">
       <h2 data-reveal style="font-size:clamp(28px,4.4vw,56px);font-weight:700;line-height:1.08;letter-spacing:-.025em;color:var(--white);margin:0;text-wrap:balance">
@@ -931,12 +925,12 @@
       <details class="faq">
         <summary class="faq-q">Ce qui est inclus dans votre Immersion<span class="faq-ic"></span></summary>
         <div class="faq-a"><div class="pr-inc-list">
-          <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#C41E3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Analyse préalable de votre projet et de vos besoins.</span></div>
-          <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#C41E3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Préparation d'un programme de visites personnalisé.</span></div>
-          <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#C41E3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Sélection des fabricants et organisation des rendez-vous.</span></div>
-          <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#C41E3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Accompagnement physique BEA pendant toute la durée du programme.</span></div>
-          <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#C41E3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Conseils et comparaisons des solutions sur place.</span></div>
-          <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#C41E3A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Rapport de synthèse après votre Immersion.</span></div>
+          <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#EF3340" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Analyse préalable de votre projet et de vos besoins.</span></div>
+          <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#EF3340" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Préparation d'un programme de visites personnalisé.</span></div>
+          <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#EF3340" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Sélection des fabricants et organisation des rendez-vous.</span></div>
+          <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#EF3340" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Accompagnement physique BEA pendant toute la durée du programme.</span></div>
+          <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#EF3340" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Conseils et comparaisons des solutions sur place.</span></div>
+          <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#EF3340" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Rapport de synthèse après votre Immersion.</span></div>
         </div></div>
       </details>
       <details class="faq">
@@ -973,23 +967,16 @@
         </div>
       </div>
       <div>
-        <div data-reveal class="cr-table">
-          <div class="cr-label">Concrètement</div>
-          <div class="cr-row cr-head"><span>Votre Immersion</span><span>Tarif</span><span>Crédit potentiel</span></div>
-          <div class="cr-row"><span class="cr-dest">Turquie — 2 jours</span><span class="cr-price">500 €</span><span class="cr-credit">150 €</span></div>
-          <div class="cr-row"><span class="cr-dest">Turquie — 4 jours</span><span class="cr-price">1 000 €</span><span class="cr-credit">300 €</span></div>
-          <div class="cr-row"><span class="cr-dest">Chine — 5 jours</span><span class="cr-price">1 500 €</span><span class="cr-credit">450 €</span></div>
-        </div>
-        <div data-reveal class="cr-how">
-          <div class="cr-label">Comment en bénéficier ?</div>
+        <details data-reveal class="faq" style="margin-bottom:0">
+          <summary class="faq-q">Comment en bénéficier ?<span class="faq-ic"></span></summary>
+          <div class="faq-a">
           <div class="cr-step"><span class="cr-step-n">01</span><p><strong style="display:block;color:var(--white);font-weight:600;margin-bottom:4px">Confirmez vos achats</strong>Au moins <strong style="color:var(--white);font-weight:600">20 000 € de matériaux</strong> achetés sous coordination BEA, pour le même projet, dans les 6 mois suivant l'Immersion.</p></div>
           <div class="cr-step"><span class="cr-step-n">02</span><p><strong style="display:block;color:var(--white);font-weight:600;margin-bottom:4px">Bénéficiez de votre crédit</strong>Le montant éligible est déduit de vos honoraires de Pilotage des achats, dans les limites prévues.</p></div>
-        </div>
+          <p style="margin:18px 0 0;padding-top:16px;border-top:1px solid var(--brd);font-size:13px;line-height:1.7;color:rgba(244,239,232,.72);text-wrap:pretty">Crédit non remboursable et non transférable, applicable uniquement aux honoraires de Pilotage des achats. Il est cumulable avec les crédits de préparation éligibles, dans la limite des plafonds prévus et d'un minimum de 750 € d'honoraires restant dus.</p>
+          </div>
+        </details>
       </div>
     </div>
-    <p data-reveal style="text-align:center;font-size:13.5px;line-height:1.7;color:rgba(244,239,232,.72);max-width:720px;margin:36px auto 0;text-wrap:pretty">
-      Crédit non remboursable et non transférable, applicable uniquement aux honoraires de Pilotage des achats. Il est cumulable avec les crédits de préparation éligibles, dans la limite des plafonds prévus et d'un minimum de 750 € d'honoraires restant dus.
-    </p>
   </div>
 </section>
 
@@ -1003,9 +990,6 @@
       <h2 data-reveal style="font-size:clamp(28px,4.4vw,56px);font-weight:700;line-height:1.1;letter-spacing:-.025em;color:var(--white);margin:0 0 18px;text-wrap:balance">
         Tout savoir avant votre <em style="font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:700;color:var(--red)">Immersion</em>.
       </h2>
-      <p data-reveal style="font-size:clamp(15px,1.15vw,17px);line-height:1.8;color:var(--dim);max-width:600px;margin:0 auto;text-wrap:pretty">
-        Retrouvez les réponses aux principales questions pour préparer votre déplacement en Turquie ou en Chine avec BEA.
-      </p>
     </div>
     <div data-reveal style="display:flex;flex-direction:column">
       <details class="faq">
@@ -1033,11 +1017,6 @@
         <div class="faq-a"><p style="margin:0 0 10px">Commencez par nous présenter votre projet et vos besoins. Nous vérifions la faisabilité du programme, définissons les dates et vous confirmons les modalités de votre accompagnement.</p><p style="margin:0 0 10px">La réservation est confirmée après validation du programme et versement d'un acompte de 50 %. Le solde est réglé avant le début de l'Immersion.</p></div>
       </details>
     </div>
-    <div data-reveal class="fb-conviction" style="max-width:820px;margin-top:clamp(40px,5vw,64px)">
-      <p style="font-size:clamp(18px,1.7vw,24px);font-weight:600;line-height:1.4;letter-spacing:-.01em;color:var(--white);margin:0 0 10px">Une question spécifique concernant votre projet ?</p>
-      <p style="font-size:15px;line-height:1.7;color:var(--dim);margin:0 0 26px">Notre équipe est à votre disposition pour vous orienter vers la formule la plus adaptée.</p>
-      <button class="pr-cta" style="width:auto;display:inline-flex;gap:14px;background:var(--red);border-color:var(--red);padding:15px 28px" onClick="{{ goContact }}">Préparer mon immersion<span class="pr-arrow">→</span></button>
-    </div>
   </div>
 </section>
 
@@ -1047,7 +1026,7 @@
 ═══════════════════════════════════════════ -->
 <section id="contact" style="position:relative;padding:var(--spv) var(--sph);background:var(--bg);overflow:hidden">
   <!-- Red radial glow -->
-  <div style="position:absolute;bottom:-25%;left:50%;transform:translateX(-50%);width:80%;height:60%;background:radial-gradient(ellipse,rgba(196,30,58,.055) 0%,transparent 60%);pointer-events:none"></div>
+  <div style="position:absolute;bottom:-25%;left:50%;transform:translateX(-50%);width:80%;height:60%;background:radial-gradient(ellipse,rgba(239,51,64,.055) 0%,transparent 60%);pointer-events:none"></div>
 
 
   <div style="position:relative;z-index:2;max-width:600px;margin:0 auto">
@@ -1069,9 +1048,7 @@
 
     <div data-reveal="" style="position:relative;margin-top:-64px;text-align:center;z-index:3">
       <button class="split-cta" data-split-cta="" onClick="{{ goContact }}">
-        <div class="split-cta-badge">
-          <span class="split-cta-arrow" style="opacity:1;display:flex"><svg width="18" height="18" viewBox="0 0 24 24" fill="var(--red)" style="transform:rotate(45deg)"><path d="M21 16v-2l-8-5V3.5A1.5 1.5 0 0 0 11.5 2 1.5 1.5 0 0 0 10 3.5V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg></span>
-        </div>
+        <div class="split-cta-badge"><span class="split-cta-arrow">→</span></div>
         Préparer mon immersion
       </button>
       <p style="font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);margin:22px 0 0">Turquie ou Chine <span style="color:var(--red);margin:0 6px">·</span> Immersions privées <span style="color:var(--red);margin:0 6px">·</span> Parcours personnalisés</p>
@@ -1312,6 +1289,8 @@ class Component extends DCLogic {
     document.querySelectorAll('[data-split-cta]').forEach(btn => {
       btn.addEventListener('mouseenter', () => btn.classList.add('hovered'));
       btn.addEventListener('mouseleave', () => btn.classList.remove('hovered'));
+      btn.addEventListener('touchstart', () => btn.classList.add('hovered'), { passive: true });
+      btn.addEventListener('touchend', () => setTimeout(() => btn.classList.remove('hovered'), 900), { passive: true });
     });
   }
 
