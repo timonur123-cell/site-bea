@@ -421,5 +421,6 @@ class Component extends DCLogic {
   componentWillUnmount() { clearTimeout(this._t1); clearTimeout(this._t2); if (this._heroScroll) { window.removeEventListener('scroll', this._heroScroll); window.removeEventListener('resize', this._heroScroll); } if (this._heroParallax) { window.removeEventListener('mousemove', this._heroParallax); } }
 }
 </script>
+<script src="/nav.js" defer></script>
 </body>
 </html>
