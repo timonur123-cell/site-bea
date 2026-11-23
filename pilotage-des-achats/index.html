@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#050505;color:#F4EFE8;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:rgba(196,30,58,.3)}
+  image-slot{display:block}
+  details summary{list-style:none;cursor:pointer}
+  details summary::-webkit-details-marker{display:none}
+  details[open] .bea-chev{transform:rotate(180deg)}
+  @keyframes beaGlow{0%,100%{opacity:.5}50%{opacity:1}}
+  @keyframes beaSpin{to{transform:rotate(360deg)}}
+  @keyframes beaBeam{0%{top:2%}100%{top:88%}}
+  @keyframes beaFadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  /* Reveal kept opacity-safe: content is always visible; the rise is a pure
+     transform enhancement that can't hide content if animations are throttled. */
+  @media(prefers-reduced-motion:no-preference){
+    .bea-reveal.bea-armed{transform:translateY(26px)}
+    .bea-reveal.bea-shown{transform:none;transition:transform .85s cubic-bezier(.16,1,.3,1)}
+  }
+  @keyframes beaNeon{0%,100%{box-shadow:0 0 16px rgba(196,30,58,.5),0 0 40px rgba(196,30,58,.28),0 12px 40px rgba(196,30,58,.32)}50%{box-shadow:0 0 26px rgba(196,30,58,.8),0 0 64px rgba(196,30,58,.46),0 12px 46px rgba(196,30,58,.36)}}
+  .bea-neon{animation:beaNeon 2.6s ease-in-out infinite}
+  /* ===== Split CTA — néon pulsé + badge glissant/morphant ===== */
+  @keyframes beaPulseCta{0%,100%{box-shadow:0 0 18px rgba(196,30,58,.55),0 8px 30px rgba(196,30,58,.22)}50%{box-shadow:0 0 30px rgba(196,30,58,.9),0 10px 38px rgba(196,30,58,.33)}}
+  .bea-splitcta{animation:beaPulseCta 2.8s ease-in-out infinite;transition:padding .52s cubic-bezier(.4,0,.2,1);text-transform:none!important;font-weight:600!important;letter-spacing:0!important}
+  .bea-splitcta:hover{padding:0 84px 0 30px!important}
+  .bea-splitcta .bdg{transition:left .52s cubic-bezier(.4,0,.2,1),border-radius .52s cubic-bezier(.4,0,.2,1)}
+  .bea-splitcta:hover .bdg{left:calc(100% - 78px)!important;border-radius:0 22px 22px 0!important}
+  @keyframes beaMarqL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes beaMarqR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+  @keyframes beaDriftUp{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+  @keyframes beaDriftDn{0%,100%{transform:translateY(0)}50%{transform:translateY(16px)}}
+  @keyframes beaDriftSway{0%,100%{transform:translateY(-8px)}50%{transform:translateY(8px)}}
+  @keyframes beaHeroIn{from{opacity:0}to{opacity:1}}
+  @keyframes beaBreathe{0%,100%{filter:brightness(.2) saturate(.82)}50%{filter:brightness(.46) saturate(.95)}}
+  .bea-heromarq{display:none}
+  @media(max-width:1024px){.bea-pricegrid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+  @media(max-width:860px){.bea-incl{grid-template-columns:1fr!important}}
+  @media(max-width:900px){.bea-explore{grid-template-columns:1fr!important}}
+  @media(max-width:700px){.bea-accesgrid{grid-template-columns:1fr!important;max-width:440px;margin-left:auto;margin-right:auto}}
+  .bea-ctafinal:hover{padding:0 94px 0 22px!important}
+  .bea-enjcard:hover{border-color:rgba(196,30,58,.4)!important;transform:translateY(-3px)}
+  @media(max-width:760px){.bea-enjeux{grid-template-columns:1fr!important;gap:14px!important}}
+  @media(max-width:700px){}
+  @media(max-width:760px){.bea-feegrid{grid-template-columns:1fr!important}.bea-paygrid{grid-template-columns:1fr!important;gap:6px!important}}
+  @media(max-width:760px){.bea-rolegrid{grid-template-columns:1fr!important;gap:14px!important}}
+  @media(max-width:640px){
+    .bea-ctafinal{white-space:normal!important;height:auto!important;min-height:64px;padding:11px 16px 11px 66px!important;line-height:1.25;text-align:center;font-size:15px!important;text-wrap:balance}
+    .bea-ctafinal .bdg{width:50px!important;height:auto!important;top:6px!important;bottom:6px;left:6px!important}
+    .bea-ctafinal:hover{padding:11px 66px 11px 16px!important}
+    .bea-ctafinal:hover .bdg{left:calc(100% - 56px)!important}
+  }
+  .bea-enjcard:hover{border-color:rgba(196,30,58,.4)!important;transform:translateY(-3px)}
+  @media(max-width:760px){.bea-enjeux{grid-template-columns:1fr!important;gap:14px!important}}
+  @media(max-width:700px){.bea-flow{flex-direction:column!important;max-width:380px!important}.bea-flow>span[aria-hidden]{transform:rotate(90deg);padding:2px 0}}
+  @media(max-width:760px){.bea-feegrid{grid-template-columns:1fr!important}.bea-paygrid{grid-template-columns:1fr!important;gap:6px!important}}
+  @media(max-width:760px){.bea-rolegrid{grid-template-columns:1fr!important;gap:14px!important}}
+  @media(max-width:860px){.bea-pilotsplit{grid-template-columns:1fr!important;gap:28px!important;max-width:620px}.bea-pilotimg{aspect-ratio:5/4!important;object-position:50% 42%!important}}
+  @media(max-width:640px){.bea-explore{gap:38px!important}.bea-photoipad{width:calc(100% + 48px)!important;max-width:none!important;margin-left:-24px!important;margin-right:-24px!important}}
+  @media(max-width:700px){.bea-accesgrid{grid-template-columns:1fr!important;max-width:440px;margin-left:auto;margin-right:auto}}
+  .bea-ctafinal:hover{padding:0 94px 0 22px!important}
+  .bea-enjcard:hover{border-color:rgba(196,30,58,.4)!important;transform:translateY(-3px)}
+  @media(max-width:760px){.bea-enjeux{grid-template-columns:1fr!important;gap:14px!important}}
+  @media(max-width:700px){.bea-flow{flex-direction:column!important;max-width:380px!important}.bea-flow>span[aria-hidden]{transform:rotate(90deg);padding:2px 0}}
+  @media(max-width:760px){.bea-feegrid{grid-template-columns:1fr!important}.bea-paygrid{grid-template-columns:1fr!important;gap:6px!important}}
+  @media(max-width:760px){.bea-rolegrid{grid-template-columns:1fr!important;gap:14px!important}}
+  @media(max-width:860px){.bea-pilotsplit{grid-template-columns:1fr!important;gap:28px!important;max-width:620px}.bea-pilotimg{aspect-ratio:5/4!important;object-position:50% 42%!important}}
+  @media(max-width:640px){
+    .bea-ctafinal{white-space:normal!important;height:auto!important;min-height:64px;padding:11px 16px 11px 66px!important;line-height:1.25;text-align:center;font-size:15px!important;text-wrap:balance}
+    .bea-ctafinal .bdg{width:50px!important;height:auto!important;top:6px!important;bottom:6px;left:6px!important}
+    .bea-ctafinal:hover{padding:11px 66px 11px 16px!important}
+    .bea-ctafinal:hover .bdg{left:calc(100% - 56px)!important}
+  }
+  .bea-enjcard:hover{border-color:rgba(196,30,58,.4)!important;transform:translateY(-3px)}
+  @media(max-width:760px){.bea-enjeux{grid-template-columns:1fr!important;gap:14px!important}}
+  @media(max-width:700px){.bea-flow{flex-direction:column!important;max-width:380px!important}.bea-flow>span[aria-hidden]{transform:rotate(90deg);padding:2px 0}}
+  @media(max-width:760px){.bea-feegrid{grid-template-columns:1fr!important}.bea-paygrid{grid-template-columns:1fr!important;gap:6px!important}}
+  @media(max-width:760px){.bea-rolegrid{grid-template-columns:1fr!important;gap:14px!important}}
+  @media(max-width:860px){.bea-pilotsplit{grid-template-columns:1fr!important;gap:28px!important;max-width:620px}.bea-pilotimg{aspect-ratio:5/4!important;object-position:50% 42%!important}}
+  @media(max-width:640px){.bea-herogrid{display:none!important}.bea-heromarq{display:block!important}}
+  .bea-cta:hover .bea-cta-badge{left:calc(100% - 46px)}
+  .bea-scen:hover{border-color:rgba(196,30,58,.5)!important;box-shadow:0 18px 50px rgba(196,30,58,.14),0 0 0 1px rgba(196,30,58,.35)}
+  .bea-pop{transform:scale(1.035)}
+  .bea-pricecta{transition:background .3s,color .3s,border-color .3s}
+  .bea-pricecta:hover{background:#C41E3A;color:#fff;border-color:#C41E3A}
+  .bea-pricecta-solid:hover{background:#a5182f;border-color:#a5182f}
+  .bea-scimg{will-change:auto}
+  .bea-recv{transition:border-color .35s,transform .35s,box-shadow .35s}
+  .bea-recv:hover{border-color:rgba(196,30,58,.4)!important;transform:translateY(-3px);box-shadow:0 14px 34px rgba(0,0,0,.4)}
+  .bea-tlcard{transition:border-color .35s,transform .35s,box-shadow .35s}
+  .bea-tlcard:hover{border-color:rgba(196,30,58,.4)!important;transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.45)}
+  .bea-aud:hover{border-color:rgba(196,30,58,.3)!important}
+  @media(hover:hover){.bea-out:hover{border-color:rgba(196,30,58,.55)!important;background:rgba(196,30,58,.06)!important}}
+  .bea-out:active{border-color:rgba(196,30,58,.55)!important;background:rgba(196,30,58,.06)!important}
+  .bea-faq:hover{border-color:rgba(255,255,255,.14)!important}
+  .bea-navlink:hover{color:#F4EFE8!important}
+  .bea-chip:hover{border-color:rgba(196,30,58,.4)!important}
+  .bea-cfill{transition:transform .42s cubic-bezier(.16,1,.3,1)}
+  .bea-chip:hover .bea-cfill{transform:scale(1)!important}
+  .bea-cic{transition:stroke .35s}
+  .bea-chip:hover .bea-cic{stroke:#F4EFE8!important}
+  /* ---- Tablet ---- */
+  @media(max-width:1080px){
+    .bea-rail{display:none!important}
+    .bea-secgrid{grid-template-columns:1fr!important}
+    .bea-hero{grid-template-columns:1fr!important}
+    .bea-split{grid-template-columns:1fr!important}
+    .bea-g3{grid-template-columns:1fr!important}
+    .bea-g6{grid-template-columns:repeat(3,1fr)!important}
+    .bea-g4{grid-template-columns:repeat(2,1fr)!important}
+    .bea-g3c{grid-template-columns:repeat(2,1fr)!important}
+    .bea-audgrid{grid-template-columns:repeat(3,1fr)!important;gap:30px 0!important}
+    .bea-audgrid>div{border-right:none!important}
+    .bea-infocard{grid-template-columns:1fr!important;padding:34px 30px!important}
+    .bea-infocard>span[style*="align-self"]{display:none!important}
+    .bea-infoblock{padding:0!important}
+    .bea-pricerow{grid-template-columns:1fr!important;max-width:520px!important}
+    .bea-pricegrid{grid-template-columns:repeat(2,minmax(0,1fr))!important;max-width:460px!important;gap:10px!important;margin-left:auto!important;margin-right:auto!important}
+    .bea-pcard{padding:16px 14px 14px!important;border-radius:20px!important}
+    .bea-pprice{font-size:32px!important}
+    .bea-pcard .bea-out{font-size:13px!important;height:40px!important}
+    .bea-libgrid{grid-template-columns:repeat(2,1fr)!important}
+    .bea-ctagrid{grid-template-columns:1fr!important}
+    .bea-sec{padding-left:44px!important;padding-right:44px!important}
+    .bea-navlink{display:none!important}
+    .bea-heroimg{height:360px!important}
+  }
+  /* ---- Mobile ---- */
+  @media(max-width:1024px){.bea-pricegrid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+  @media(max-width:860px){.bea-incl{grid-template-columns:1fr!important}}
+  @media(max-width:900px){.bea-explore{grid-template-columns:1fr!important}}
+  @media(max-width:700px){.bea-accesgrid{grid-template-columns:1fr!important;max-width:440px;margin-left:auto;margin-right:auto}}
+  .bea-ctafinal:hover{padding:0 94px 0 22px!important}
+  .bea-enjcard:hover{border-color:rgba(196,30,58,.4)!important;transform:translateY(-3px)}
+  @media(max-width:760px){.bea-enjeux{grid-template-columns:1fr!important;gap:14px!important}}
+  @media(max-width:700px){.bea-flow{flex-direction:column!important;max-width:380px!important}.bea-flow>span[aria-hidden]{transform:rotate(90deg);padding:2px 0}}
+  @media(max-width:760px){.bea-feegrid{grid-template-columns:1fr!important}.bea-paygrid{grid-template-columns:1fr!important;gap:6px!important}}
+  @media(max-width:760px){.bea-rolegrid{grid-template-columns:1fr!important;gap:14px!important}}
+  @media(max-width:860px){.bea-pilotsplit{grid-template-columns:1fr!important;gap:28px!important;max-width:620px}.bea-pilotimg{aspect-ratio:5/4!important;object-position:50% 42%!important}}
+  @media(max-width:640px){
+    .bea-ctafinal{white-space:normal!important;height:auto!important;min-height:64px;padding:11px 16px 11px 66px!important;line-height:1.25;text-align:center;font-size:15px!important;text-wrap:balance}
+    .bea-ctafinal .bdg{width:50px!important;height:auto!important;top:6px!important;bottom:6px;left:6px!important}
+    .bea-ctafinal:hover{padding:11px 66px 11px 16px!important}
+    .bea-ctafinal:hover .bdg{left:calc(100% - 56px)!important}
+  }
+  .bea-enjcard:hover{border-color:rgba(196,30,58,.4)!important;transform:translateY(-3px)}
+  @media(max-width:760px){.bea-enjeux{grid-template-columns:1fr!important;gap:14px!important}}
+  @media(max-width:700px){.bea-flow{flex-direction:column!important;max-width:380px!important}.bea-flow>span[aria-hidden]{transform:rotate(90deg);padding:2px 0}}
+  @media(max-width:760px){.bea-feegrid{grid-template-columns:1fr!important}.bea-paygrid{grid-template-columns:1fr!important;gap:6px!important}}
+  @media(max-width:760px){.bea-rolegrid{grid-template-columns:1fr!important;gap:14px!important}}
+  @media(max-width:860px){.bea-pilotsplit{grid-template-columns:1fr!important;gap:28px!important;max-width:620px}.bea-pilotimg{aspect-ratio:5/4!important;object-position:50% 42%!important}}
+  @media(max-width:640px){.bea-showroom{-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 6%,#000 92%,transparent 100%)!important;mask-image:linear-gradient(to bottom,transparent 0%,#000 6%,#000 92%,transparent 100%)!important}.bea-explore{gap:38px!important}.bea-photoipad{width:calc(100% + 48px)!important;max-width:none!important;margin-left:-24px!important;margin-right:-24px!important}}
+  @media(max-width:700px){.bea-accesgrid{grid-template-columns:1fr!important;max-width:440px;margin-left:auto;margin-right:auto}}
+  .bea-ctafinal:hover{padding:0 94px 0 22px!important}
+  .bea-enjcard:hover{border-color:rgba(196,30,58,.4)!important;transform:translateY(-3px)}
+  @media(max-width:760px){.bea-enjeux{grid-template-columns:1fr!important;gap:14px!important}}
+  @media(max-width:700px){.bea-flow{flex-direction:column!important;max-width:380px!important}.bea-flow>span[aria-hidden]{transform:rotate(90deg);padding:2px 0}}
+  @media(max-width:760px){.bea-feegrid{grid-template-columns:1fr!important}.bea-paygrid{grid-template-columns:1fr!important;gap:6px!important}}
+  @media(max-width:760px){.bea-rolegrid{grid-template-columns:1fr!important;gap:14px!important}}
+  @media(max-width:860px){.bea-pilotsplit{grid-template-columns:1fr!important;gap:28px!important;max-width:620px}.bea-pilotimg{aspect-ratio:5/4!important;object-position:50% 42%!important}}
+  @media(max-width:640px){
+    .bea-ctafinal{white-space:normal!important;height:auto!important;min-height:64px;padding:11px 16px 11px 66px!important;line-height:1.25;text-align:center;font-size:15px!important;text-wrap:balance}
+    .bea-ctafinal .bdg{width:50px!important;height:auto!important;top:6px!important;bottom:6px;left:6px!important}
+    .bea-ctafinal:hover{padding:11px 66px 11px 16px!important}
+    .bea-ctafinal:hover .bdg{left:calc(100% - 56px)!important}
+  }
+  .bea-enjcard:hover{border-color:rgba(196,30,58,.4)!important;transform:translateY(-3px)}
+  @media(max-width:760px){.bea-enjeux{grid-template-columns:1fr!important;gap:14px!important}}
+  @media(max-width:700px){.bea-flow{flex-direction:column!important;max-width:380px!important}.bea-flow>span[aria-hidden]{transform:rotate(90deg);padding:2px 0}}
+  @media(max-width:760px){.bea-feegrid{grid-template-columns:1fr!important}.bea-paygrid{grid-template-columns:1fr!important;gap:6px!important}}
+  @media(max-width:760px){.bea-rolegrid{grid-template-columns:1fr!important;gap:14px!important}}
+  @media(max-width:860px){.bea-pilotsplit{grid-template-columns:1fr!important;gap:28px!important;max-width:620px}.bea-pilotimg{aspect-ratio:5/4!important;object-position:50% 42%!important}}
+  @media(max-width:640px){
+    .bea-sec{padding-left:24px!important;padding-right:24px!important;margin-top:30px!important;padding-top:30px!important}
+    #hero{min-height:auto!important;padding:8px 0 10px!important}
+    .bea-herocta{margin-top:24px!important}
+    .bea-simstage{margin-top:10px!important;width:calc(100% + 36px)!important;margin-left:-18px!important;margin-right:-18px!important;max-width:none!important}
+    .bea-solsplit{gap:16px!important}
+    .bea-solsplit>div:last-child{width:calc(100% + 36px)!important;margin-left:-18px!important;margin-right:-18px!important}
+    .bea-fatigue{width:calc(100% + 36px)!important;margin-left:-18px!important;margin-right:-18px!important;max-width:none!important}
+    .bea-8p{width:calc(100% + 48px)!important;margin-left:-24px!important;margin-right:-24px!important;max-width:none!important}
+    .bea-8p img{-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 8%,#000 86%,transparent 100%)!important;mask-image:linear-gradient(to bottom,transparent 0%,#000 8%,#000 86%,transparent 100%)!important}
+    #hero h1{font-size:32px!important}
+    .bea-kw{flex-direction:column;align-items:center}
+    .bea-kwdot{display:none}
+    .bea-photoband{--t:96px!important;--g:10px!important;--p:16px!important}
+    .bea-sec h2{font-size:25px!important}
+    .bea-ctawrap{padding:16px 0 0!important}
+    .bea-ctaportrait{display:none!important}
+    .bea-ctatrust{display:none!important}
+    .bea-ctagrid{gap:18px!important}
+    #hero.bea-sec{padding-top:40px!important}
+    .bea-g6{grid-template-columns:1fr!important}
+    .bea-g4{grid-template-columns:1fr!important}
+    .bea-photo{margin-top:6px!important;min-height:230px!important}
+    .bea-audgrid{grid-template-columns:repeat(2,1fr)!important;gap:22px 0!important}
+    .bea-audgrid>div{padding:6px 14px!important}
+    .bea-step{grid-template-columns:70px 1fr!important;gap:24px!important}
+    .bea-num{width:64px!important;height:64px!important;font-size:22px!important}
+    .bea-tl-line{left:32px!important;bottom:100px!important}
+    .bea-pop{transform:none!important}
+    .bea-g3c{grid-template-columns:1fr!important}
+    .bea-faqgrid{grid-template-columns:1fr!important}
+    .bea-heroimg{height:300px!important;margin-top:24px!important}
+    .bea-board{height:320px!important}
+    .bea-net{height:320px!important}
+    .bea-ctatrust{flex-direction:column!important;gap:12px!important}
+    .bea-navcta{display:none!important}
+    header.bea-sec{padding:16px 24px!important;margin-top:0!important}
+    footer.bea-sec{padding-left:24px!important;padding-right:24px!important;flex-direction:column!important;align-items:flex-start!important;gap:14px!important}
+  }
+  @media(max-width:860px){.bea-incl{grid-template-columns:1fr!important}}
+  
+</style>
+</helmet>
+<div style="position:relative;width:100%;max-width:1440px;margin:0 auto">
+<div aria-hidden="true" style="position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.08;mix-blend-mode:overlay;background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAiIGhlaWdodD0iMTYwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC44IiBudW1PY3RhdmVzPSIyIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI24pIi8+PC9zdmc+')"></div>
+<div aria-hidden="true" style="position:fixed;inset:0;z-index:9997;pointer-events:none;background:radial-gradient(ellipse 120% 90% at 50% 40%,transparent 58%,rgba(0,0,0,.35) 100%)"></div>
+<header class="bea-sec" style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:3px 80px;background:rgba(5,5,5,.72);backdrop-filter:blur(14px)">
+  <a href="/" style="display:flex;align-items:center;gap:14px;text-decoration:none">
+    <span style="font-weight:800;font-size:27px;letter-spacing:-.02em;color:#F4EFE8;line-height:1">bea<span style="color:#C41E3A">.</span></span>
+  </a>
+</header>
+
+<section id="hero" style="position:relative;background:#050505;overflow:hidden;margin-top:-28px">
+
+  <!-- ===== Photo band : deux rangées défilantes ===== -->
+  <div class="bea-photoband" style="position:relative;overflow:hidden;--t:150px;--g:14px;--p:0px;height:calc(var(--p) + var(--t)*2 + var(--g) + 104px)">
+
+    <!-- Rangée 1 — défile vers la gauche -->
+    <div style="position:absolute;top:var(--p);left:0;right:0;overflow:hidden">
+      <div style="display:flex;gap:var(--g);width:max-content;animation:beaMarqL 62s linear infinite"><img src="hero/s1.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s2.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s3.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s4.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s5.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s6.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s7.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s8.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s9.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s10.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s1.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s2.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s3.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s4.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s5.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s6.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s7.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s8.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s9.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s10.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"></div>
+    </div>
+    <!-- Rangée 2 — défile vers la droite -->
+    <div style="position:absolute;top:calc(var(--p) + var(--t) + var(--g));left:0;right:0;overflow:hidden">
+      <div style="display:flex;gap:var(--g);width:max-content;animation:beaMarqR 62s linear infinite"><img src="hero/s6.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s7.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s8.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s9.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s10.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s1.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s2.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s3.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s4.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s5.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s6.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s7.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s8.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s9.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s10.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s1.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s2.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s3.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s4.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"><img src="hero/s5.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.58) saturate(.95)"></div>
+    </div>
+
+    <!-- fondus latéraux -->
+    <div style="position:absolute;top:0;left:0;width:80px;height:100%;background:linear-gradient(90deg,#050505,transparent);z-index:3;pointer-events:none"></div>
+    <div style="position:absolute;top:0;right:0;width:80px;height:100%;background:linear-gradient(270deg,#050505,transparent);z-index:3;pointer-events:none"></div>
+
+    <!-- dégradé noir vertical : haut net -> bas noir -->
+    <div style="position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(to bottom,transparent 0%,transparent 44%,rgba(5,5,5,.32) 66%,rgba(5,5,5,.8) 87%,#050505 100%)"></div>
+
+    <!-- Titre superposé, en bas, chevauchant la 2e rangée -->
+    <div class="bea-reveal" style="position:absolute;left:0;right:0;bottom:22px;z-index:4;text-align:center;padding:0 28px">
+      <h1 style="margin:0 auto;max-width:900px;font-size:clamp(34px,4.6vw,62px);font-weight:800;line-height:1.04;letter-spacing:-.025em;text-wrap:balance"><span style="display:block;text-wrap:balance">Vous construisez en Afrique.</span><span style="display:block;text-wrap:balance">Nous <span style="font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:1.1em;color:#C41E3A">pilotons</span> vos achats.</span></h1>
+    </div>
+  </div>
+
+  <!-- ===== Sous-titre + CTA sur fond noir plein ===== -->
+  <div class="bea-reveal" style="position:relative;z-index:4;text-align:center;padding:22px 28px 4px;background:#050505">
+    <p style="margin:0 auto;max-width:640px;font-size:clamp(15px,1.6vw,17px);line-height:1.62;color:rgba(244,239,232,.7)">En Turquie et en Chine, BEA coordonne vos commandes, suit la production, contrôle physiquement les marchandises et organise leur expédition.</p>
+    <div class="bea-herocta" style="margin-top:30px;display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap">
+      <a class="bea-splitcta" href="#acces" style="position:relative;display:inline-flex;align-items:center;justify-content:center;height:52px;padding:0 30px 0 84px;border-radius:50px;background:#C41E3A;color:#fff;font-size:14px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none">Confier mes achats à BEA<span class="bdg" style="position:absolute;left:4px;top:4px;display:flex;align-items:center;justify-content:center;width:72px;height:44px;border-radius:22px 0 0 22px;background:#111"><svg class="ar" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#C41E3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
+    </div>
+  </div>
+</section>
+
+<section id="benefice" class="bea-sec" style="margin-top:72px;padding:72px 80px 0">
+  <div style="max-width:1040px;margin:0 auto">
+    <div class="bea-reveal" style="max-width:720px;margin:0 auto;text-align:center">
+      <h2 style="margin:0;font-size:clamp(28px,3.2vw,44px);font-weight:700;line-height:1.16;letter-spacing:-.015em;text-wrap:balance"><span style="display:block">Trouver un fabricant est une chose.</span><span style="font-family:'Playfair Display',serif;font-style:italic;font-weight:600;color:#C41E3A">Maîtriser ses achats en est une autre.</span></h2>
+      <p style="margin:22px auto 0;max-width:620px;font-size:15px;line-height:1.64;color:rgba(244,239,232,.65);text-wrap:pretty">Acheter auprès de plusieurs fabricants en Turquie ou en Chine peut offrir de réelles opportunités. Mais entre les commandes, les productions et les expéditions, les difficultés se jouent souvent dans les détails.</p>
+    </div>
+    <div class="bea-reveal bea-enjeux" style="margin-top:52px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px">
+      <div class="bea-enjcard" style="position:relative;display:flex;flex-direction:column;padding:30px 28px 0;background:#0B0B0B;border:1px solid rgba(255,255,255,.08);border-radius:24px;overflow:hidden;transition:border-color .35s,transform .35s">
+        <span aria-hidden="true" style="position:absolute;top:14px;right:22px;font-size:64px;font-weight:800;line-height:1;letter-spacing:-.04em;color:rgba(244,239,232,.05)">01</span>
+        <div style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.16em;color:#C41E3A"><span style="width:18px;height:1px;background:#C41E3A"></span>01</div>
+        <h3 style="margin:14px 0 0;padding-right:34px;font-size:clamp(18px,1.9vw,21px);font-weight:700;line-height:1.3;letter-spacing:-.01em;color:#F4EFE8;text-wrap:balance">Vous commandez une référence. Vous en recevez une autre.</h3>
+        <p style="margin:10px 0 0;font-size:14.5px;line-height:1.62;color:rgba(244,239,232,.6);text-wrap:pretty">Une couleur légèrement différente, une mauvaise dimension, un profil aluminium non conforme ou une finition qui ne correspond pas à la sélection initiale.</p>
+        <div style="margin-top:auto;padding:18px 0 22px"><div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.07);display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.5;font-weight:600;color:rgba(244,239,232,.9);text-wrap:pretty"><span aria-hidden="true" style="flex:none;margin-top:7px;width:6px;height:6px;border-radius:50%;background:#C41E3A;box-shadow:0 0 10px rgba(196,30,58,.8)"></span><span>Une simple erreur peut compromettre tout un lot.</span></div></div>
+      </div>
+      <div class="bea-enjcard" style="position:relative;display:flex;flex-direction:column;padding:30px 28px 0;background:#0B0B0B;border:1px solid rgba(255,255,255,.08);border-radius:24px;overflow:hidden;transition:border-color .35s,transform .35s">
+        <span aria-hidden="true" style="position:absolute;top:14px;right:22px;font-size:64px;font-weight:800;line-height:1;letter-spacing:-.04em;color:rgba(244,239,232,.05)">02</span>
+        <div style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.16em;color:#C41E3A"><span style="width:18px;height:1px;background:#C41E3A"></span>02</div>
+        <h3 style="margin:14px 0 0;padding-right:34px;font-size:clamp(18px,1.9vw,21px);font-weight:700;line-height:1.3;letter-spacing:-.01em;color:#F4EFE8;text-wrap:balance">Vos fabricants ne produisent pas au même rythme.</h3>
+        <p style="margin:10px 0 0;font-size:14.5px;line-height:1.62;color:rgba(244,239,232,.6);text-wrap:pretty">Les portes sont prêtes, mais les menuiseries aluminium prennent du retard. Le carrelage attend au dépôt pendant que les dernières commandes ne sont pas terminées.</p>
+        <div style="margin-top:auto;padding:18px 0 22px"><div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.07);display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.5;font-weight:600;color:rgba(244,239,232,.9);text-wrap:pretty"><span aria-hidden="true" style="flex:none;margin-top:7px;width:6px;height:6px;border-radius:50%;background:#C41E3A;box-shadow:0 0 10px rgba(196,30,58,.8)"></span><span>Un seul retard peut désorganiser l’ensemble de l’expédition.</span></div></div>
+      </div>
+      <div class="bea-enjcard" style="position:relative;display:flex;flex-direction:column;padding:30px 28px 0;background:#0B0B0B;border:1px solid rgba(255,255,255,.08);border-radius:24px;overflow:hidden;transition:border-color .35s,transform .35s">
+        <span aria-hidden="true" style="position:absolute;top:14px;right:22px;font-size:64px;font-weight:800;line-height:1;letter-spacing:-.04em;color:rgba(244,239,232,.05)">03</span>
+        <div style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.16em;color:#C41E3A"><span style="width:18px;height:1px;background:#C41E3A"></span>03</div>
+        <h3 style="margin:14px 0 0;padding-right:34px;font-size:clamp(18px,1.9vw,21px);font-weight:700;line-height:1.3;letter-spacing:-.01em;color:#F4EFE8;text-wrap:balance">Vos marchandises sont prêtes. Mais votre conteneur ne l’est pas.</h3>
+        <p style="margin:10px 0 0;font-size:14.5px;line-height:1.62;color:rgba(244,239,232,.6);text-wrap:pretty">Plusieurs fabricants, différentes adresses de chargement, des volumes mal anticipés ou des marchandises insuffisamment protégées.</p>
+        <div style="margin-top:auto;padding:18px 0 22px"><div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.07);display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.5;font-weight:600;color:rgba(244,239,232,.9);text-wrap:pretty"><span aria-hidden="true" style="flex:none;margin-top:7px;width:6px;height:6px;border-radius:50%;background:#C41E3A;box-shadow:0 0 10px rgba(196,30,58,.8)"></span><span>Une mauvaise consolidation peut entraîner des frais supplémentaires et des risques de dommages.</span></div></div>
+      </div>
+      <div class="bea-enjcard" style="position:relative;display:flex;flex-direction:column;padding:30px 28px 0;background:#0B0B0B;border:1px solid rgba(255,255,255,.08);border-radius:24px;overflow:hidden;transition:border-color .35s,transform .35s">
+        <span aria-hidden="true" style="position:absolute;top:14px;right:22px;font-size:64px;font-weight:800;line-height:1;letter-spacing:-.04em;color:rgba(244,239,232,.05)">04</span>
+        <div style="display:flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.16em;color:#C41E3A"><span style="width:18px;height:1px;background:#C41E3A"></span>04</div>
+        <h3 style="margin:14px 0 0;padding-right:34px;font-size:clamp(18px,1.9vw,21px);font-weight:700;line-height:1.3;letter-spacing:-.01em;color:#F4EFE8;text-wrap:balance">Vos commandes sont payées. Mais qui suit réellement leur exécution ?</h3>
+        <p style="margin:10px 0 0;font-size:14.5px;line-height:1.62;color:rgba(244,239,232,.6);text-wrap:pretty">Entre les acomptes, les soldes, les confirmations de production et les dates annoncées, les échanges se multiplient avec chaque fabricant.</p>
+        <div style="margin-top:auto;padding:18px 0 22px"><div style="margin-top:20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.07);display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.5;font-weight:600;color:rgba(244,239,232,.9);text-wrap:pretty"><span aria-hidden="true" style="flex:none;margin-top:7px;width:6px;height:6px;border-radius:50%;background:#C41E3A;box-shadow:0 0 10px rgba(196,30,58,.8)"></span><span>Sans coordination centralisée, vous perdez rapidement en visibilité sur vos achats.</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="selection" class="bea-sec" style="margin-top:72px;padding:72px 80px 0">
+  <div style="max-width:1040px;margin:0 auto">
+    <div class="bea-reveal" style="max-width:720px;margin:0 auto;text-align:center">
+      <h2 style="margin:0;font-size:clamp(28px,3.2vw,44px);font-weight:700;line-height:1.16;letter-spacing:-.015em"><span style="display:block">Plusieurs fabricants.</span><span style="display:block">Plusieurs commandes.</span><span style="display:block">Un seul <span style="font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:1.1em;color:#C41E3A">pilotage</span>.</span></h2>
+      <p style="margin:22px auto 0;max-width:620px;font-size:15px;line-height:1.64;color:rgba(244,239,232,.65);text-wrap:pretty">Vos matériaux proviennent de différentes usines, avec des délais, des conditions et des contraintes propres à chaque fournisseur. BEA coordonne ces opérations pour transformer vos achats en un approvisionnement organisé.</p>
+    </div>
+    <div class="bea-reveal" style="position:relative;max-width:680px;margin:52px auto 0">
+      <div aria-hidden="true" style="position:absolute;left:27px;top:56px;bottom:56px;width:1px;background:linear-gradient(to bottom,rgba(196,30,58,.7),rgba(196,30,58,.35))"></div>
+      <div style="position:relative;display:grid;grid-template-columns:56px minmax(0,1fr);gap:22px;align-items:start;padding-bottom:42px">
+        <span style="position:relative;z-index:2;width:56px;height:56px;border-radius:50%;border:1px solid #C41E3A;color:#C41E3A;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;background:radial-gradient(circle,rgba(196,30,58,.16),rgba(196,30,58,.03)),#050505;box-shadow:0 0 28px rgba(196,30,58,.22)">01</span>
+        <div style="padding-top:6px"><h3 style="margin:0;font-size:clamp(18px,2vw,21px);font-weight:700;line-height:1.3;letter-spacing:-.01em;color:#F4EFE8;text-wrap:balance">Nous sécurisons les commandes avant leur lancement</h3><p style="margin:10px 0 0;font-size:14.5px;line-height:1.62;color:rgba(244,239,232,.6);text-wrap:pretty">Avant validation, nous reprenons avec chaque fabricant les références, dimensions, finitions et conditions commerciales de vos commandes. Cette vérification permet de réduire les risques d’erreurs avant le lancement des productions.</p></div>
+      </div>
+      <div style="position:relative;display:grid;grid-template-columns:56px minmax(0,1fr);gap:22px;align-items:start;padding-bottom:42px">
+        <span style="position:relative;z-index:2;width:56px;height:56px;border-radius:50%;border:1px solid #C41E3A;color:#C41E3A;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;background:radial-gradient(circle,rgba(196,30,58,.16),rgba(196,30,58,.03)),#050505;box-shadow:0 0 28px rgba(196,30,58,.22)">02</span>
+        <div style="padding-top:6px"><h3 style="margin:0;font-size:clamp(18px,2vw,21px);font-weight:700;line-height:1.3;letter-spacing:-.01em;color:#F4EFE8;text-wrap:balance">Nous synchronisons les productions</h3><p style="margin:10px 0 0;font-size:14.5px;line-height:1.62;color:rgba(244,239,232,.6);text-wrap:pretty">Nous suivons les calendriers de chaque usine, relançons les fabricants et coordonnons les mises à disposition pour préparer le regroupement des marchandises.</p></div>
+      </div>
+      <div style="position:relative;display:grid;grid-template-columns:56px minmax(0,1fr);gap:22px;align-items:start;padding-bottom:42px">
+        <span style="position:relative;z-index:2;width:56px;height:56px;border-radius:50%;border:1px solid #C41E3A;color:#C41E3A;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;background:radial-gradient(circle,rgba(196,30,58,.16),rgba(196,30,58,.03)),#050505;box-shadow:0 0 28px rgba(196,30,58,.22)">03</span>
+        <div style="padding-top:6px"><h3 style="margin:0;font-size:clamp(18px,2vw,21px);font-weight:700;line-height:1.3;letter-spacing:-.01em;color:#F4EFE8;text-wrap:balance">Nous réceptionnons et contrôlons vos marchandises</h3><p style="margin:10px 0 0;font-size:14.5px;line-height:1.62;color:rgba(244,239,232,.6);text-wrap:pretty">Vos commandes sont réceptionnées dans notre dépôt logistique et contrôlées physiquement : quantités, références, dimensions accessibles et état apparent. En cas d’anomalie, nous recherchons une solution avec le fabricant avant l’expédition.</p></div>
+      </div>
+      <div style="position:relative;display:grid;grid-template-columns:56px minmax(0,1fr);gap:22px;align-items:start;padding-bottom:42px">
+        <span style="position:relative;z-index:2;width:56px;height:56px;border-radius:50%;border:1px solid #C41E3A;color:#C41E3A;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;background:radial-gradient(circle,rgba(196,30,58,.16),rgba(196,30,58,.03)),#050505;box-shadow:0 0 28px rgba(196,30,58,.22)">04</span>
+        <div style="padding-top:6px"><h3 style="margin:0;font-size:clamp(18px,2vw,21px);font-weight:700;line-height:1.3;letter-spacing:-.01em;color:#F4EFE8;text-wrap:balance">Nous préparons votre conteneur</h3><p style="margin:10px 0 0;font-size:14.5px;line-height:1.62;color:rgba(244,239,232,.6);text-wrap:pretty">Nous consolidons les commandes, évaluons volumes et poids, puis préparons le chargement selon les contraintes de chaque produit : carrelage lourd, portes volumineuses, sanitaires fragiles.</p></div>
+      </div>
+      <div style="position:relative;display:grid;grid-template-columns:56px minmax(0,1fr);gap:22px;align-items:start;padding-bottom:0">
+        <span style="position:relative;z-index:2;width:56px;height:56px;border-radius:50%;border:1px solid #C41E3A;color:#C41E3A;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800;background:radial-gradient(circle,rgba(196,30,58,.16),rgba(196,30,58,.03)),#050505;box-shadow:0 0 28px rgba(196,30,58,.22)">05</span>
+        <div style="padding-top:6px"><h3 style="margin:0;font-size:clamp(18px,2vw,21px);font-weight:700;line-height:1.3;letter-spacing:-.01em;color:#F4EFE8;text-wrap:balance">Nous coordonnons l’expédition</h3><p style="margin:10px 0 0;font-size:14.5px;line-height:1.62;color:rgba(244,239,232,.6);text-wrap:pretty">Nous organisons la mise en conteneur avec nos partenaires logistiques, suivons les documents d’expédition et vous tenons informé de l’avancement de votre dossier.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="regroupement" class="bea-sec" style="margin-top:72px;padding:72px 80px 0">
+  <div style="max-width:1040px;margin:0 auto">
+    <div class="bea-reveal" style="max-width:720px;margin:0 auto;text-align:center">
+      <h2 style="margin:0;font-size:clamp(28px,3.2vw,44px);font-weight:700;line-height:1.16;letter-spacing:-.015em"><span style="display:block">Vos marchandises réunies.</span><span style="display:block"><span style="font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:1.1em;color:#C41E3A">Contrôlées</span> avant expédition.</span></h2>
+      <p style="margin:22px auto 0;max-width:620px;font-size:15px;line-height:1.64;color:rgba(244,239,232,.65);text-wrap:pretty">Notre dépôt logistique constitue un point de regroupement pour les commandes provenant de différents fabricants.</p><p style="margin:12px auto 0;max-width:620px;font-size:15px;line-height:1.64;color:rgba(244,239,232,.65);text-wrap:pretty">C’est ici que nous organisons les vérifications physiques accessibles et préparons les chargements avant expédition.</p>
+    </div>
+    <div class="bea-reveal" style="position:relative;margin:28px auto 0;max-width:520px">
+      <div aria-hidden="true" style="position:absolute;inset:8% -14%;background:radial-gradient(ellipse at 50% 55%,rgba(196,30,58,.16),rgba(196,30,58,0) 65%);filter:blur(30px);pointer-events:none"></div>
+      <img src="media/depot-bea.jpg" loading="lazy" decoding="async" alt="Un membre de l’équipe BEA devant un conteneur ouvert et des palettes de carrelage filmées, prêtes au chargement dans le dépôt logistique" style="position:relative;z-index:1;display:block;width:100%;aspect-ratio:4/5;height:auto;object-fit:cover;object-position:50% 55%;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 14%,#000 72%,transparent 100%),linear-gradient(to right,transparent 0%,#000 16%,#000 84%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to bottom,transparent 0%,#000 14%,#000 72%,transparent 100%),linear-gradient(to right,transparent 0%,#000 16%,#000 84%,transparent 100%);mask-composite:intersect">
+    </div>
+
+  </div>
+</section>
+
+<section id="roles" class="bea-sec" style="margin-top:72px;padding:72px 80px 0">
+  <div style="max-width:1040px;margin:0 auto">
+    <div class="bea-reveal" style="max-width:720px;margin:0 auto;text-align:center">
+      <h2 style="margin:0;font-size:clamp(28px,3.2vw,44px);font-weight:700;line-height:1.16;letter-spacing:-.015em"><span style="display:block">Nous pilotons les opérations.</span><span style="display:block">Vous gardez la <span style="font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:1.1em;color:#C41E3A">décision</span>.</span></h2>
+      <p style="margin:22px auto 0;max-width:620px;font-size:15px;line-height:1.64;color:rgba(244,239,232,.65);text-wrap:pretty">BEA prend en charge la coordination opérationnelle de vos achats, sans se substituer à vous dans les décisions commerciales et financières.</p>
+    </div>
+        <div class="bea-reveal bea-rolegrid" style="margin-top:48px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px">
+      <div style="padding:28px 28px 26px;background:#0B0B0B;border:1px solid rgba(255,255,255,.1);border-radius:24px;text-align:left">
+        <div style="font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,239,232,.55)">Ce que BEA prend en charge</div>
+        <p style="margin:12px 0 0;font-size:15px;line-height:1.62;color:rgba(244,239,232,.72);text-wrap:pretty">Nous assurons la coordination opérationnelle des achats confiés à BEA et intervenons auprès des fabricants dans le cadre de la mission définie ensemble.</p>
+      </div>
+      <div style="padding:28px 28px 26px;background:radial-gradient(circle at 0% 0%,rgba(196,30,58,.12),rgba(196,30,58,0) 60%),#0B0B0B;border:1px solid rgba(196,30,58,.4);border-radius:24px;text-align:left">
+        <div style="font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#C41E3A">Ce que vous conservez</div>
+        <p style="margin:12px 0 0;font-size:15px;line-height:1.62;color:rgba(244,239,232,.72);text-wrap:pretty">Vous validez les fournisseurs, les produits, les commandes et les engagements financiers. Les décisions importantes restent soumises à votre approbation.</p>
+      </div>
+    </div>
+    <div class="bea-reveal" style="margin-top:18px;padding:28px 28px 26px;background:#0B0B0B;border:1px solid rgba(255,255,255,.1);border-radius:24px;text-align:left">
+      <div style="font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,239,232,.55)">Un cadre défini dès le départ</div>
+      <p style="margin:12px 0 0;font-size:15px;line-height:1.62;color:rgba(244,239,232,.72);text-wrap:pretty;max-width:760px">Avant le lancement, nous précisons ensemble le périmètre des achats confiés à BEA, les responsabilités de chacun et les modalités de validation des décisions importantes.</p>
+    </div>
+    <div class="bea-reveal" style="position:relative;margin:44px auto 0;max-width:820px">
+      <img src="media/rdv-client-bea.jpg" loading="lazy" decoding="async" alt="Rendez-vous BEA avec des clients dans un showroom : examen d’échantillons et de références sur tablette" style="display:block;width:100%;aspect-ratio:16/11;height:auto;object-fit:cover;object-position:60% 62%;filter:brightness(.88) saturate(.92);-webkit-mask-image:radial-gradient(ellipse 72% 70% at 50% 48%,#000 0%,#000 30%,rgba(0,0,0,.9) 42%,rgba(0,0,0,.7) 54%,rgba(0,0,0,.45) 66%,rgba(0,0,0,.22) 78%,rgba(0,0,0,.07) 90%,transparent 100%),linear-gradient(to bottom,transparent 0%,#000 22%,#000 78%,transparent 100%);-webkit-mask-composite:source-in;mask-image:radial-gradient(ellipse 72% 70% at 50% 48%,#000 0%,#000 30%,rgba(0,0,0,.9) 42%,rgba(0,0,0,.7) 54%,rgba(0,0,0,.45) 66%,rgba(0,0,0,.22) 78%,rgba(0,0,0,.07) 90%,transparent 100%),linear-gradient(to bottom,transparent 0%,#000 22%,#000 78%,transparent 100%);mask-composite:intersect">
+      <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,#050505 0%,rgba(5,5,5,0) 24%,rgba(5,5,5,0) 76%,#050505 100%),linear-gradient(to right,#050505 0%,rgba(5,5,5,0) 18%,rgba(5,5,5,0) 82%,#050505 100%),radial-gradient(ellipse 72% 70% at 50% 48%,transparent 40%,rgba(5,5,5,.5) 80%,#050505 100%) 0%,rgba(5,5,5,0) 30%,rgba(5,5,5,0) 65%,rgba(5,5,5,.3) 100%)"></div>
+    </div>
+  </div>
+</section>
+
+<section id="acces" class="bea-sec" style="margin-top:72px;padding:72px 80px 0">
+  <div style="max-width:1040px;margin:0 auto">
+    <div class="bea-reveal" style="max-width:720px;margin:0 auto;text-align:center">
+      <h2 style="margin:0;font-size:clamp(28px,3.2vw,44px);font-weight:700;line-height:1.16;letter-spacing:-.015em"><span style="display:block">Des honoraires <span style="font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:1.1em;color:#C41E3A">transparents</span>.</span><span style="display:block">Calculés sur vos achats.</span></h2>
+      <p style="margin:22px auto 0;max-width:620px;font-size:15px;line-height:1.64;color:rgba(244,239,232,.65);text-wrap:pretty">Chez BEA, les matériaux sont facturés à leur prix fournisseur, sans majoration cachée de notre part.</p>
+      <p style="margin:12px auto 0;max-width:620px;font-size:15px;line-height:1.64;color:rgba(244,239,232,.65);text-wrap:pretty">Notre rémunération correspond à une prestation de pilotage des achats, calculée selon un barème progressif : plus le volume d’achats augmente, plus le taux appliqué aux tranches supérieures diminue.</p>
+    </div>
+    <div class="bea-reveal bea-feegrid" style="margin-top:48px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start">
+      <div style="background:#0B0B0B;border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:28px 28px 24px;text-align:left">
+        <div style="font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#C41E3A">Notre grille d’honoraires</div>
+        <table style="margin-top:18px;width:100%;border-collapse:collapse">
+          <thead><tr><th scope="col" style="padding:0 0 12px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,239,232,.5);text-align:left">Tranche d’achats</th><th scope="col" style="padding:0 0 12px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,239,232,.5);text-align:right">Taux</th></tr></thead>
+          <tbody><tr><td style="padding:14px 0;border-top:1px solid rgba(255,255,255,.08);font-size:14.5px;line-height:1.4;color:rgba(244,239,232,.78)">De 0 à 20 000 €</td><td style="padding:14px 0;border-top:1px solid rgba(255,255,255,.08);font-size:14.5px;line-height:1.4;text-align:right;font-weight:700;color:#F4EFE8;white-space:nowrap">7 %</td></tr><tr><td style="padding:14px 0;border-top:1px solid rgba(255,255,255,.08);font-size:14.5px;line-height:1.4;color:rgba(244,239,232,.78)">De 20 001 à 50 000 €</td><td style="padding:14px 0;border-top:1px solid rgba(255,255,255,.08);font-size:14.5px;line-height:1.4;text-align:right;font-weight:700;color:#F4EFE8;white-space:nowrap">5 %</td></tr><tr><td style="padding:14px 0;border-top:1px solid rgba(255,255,255,.08);font-size:14.5px;line-height:1.4;color:rgba(244,239,232,.78)">De 50 001 à 100 000 €</td><td style="padding:14px 0;border-top:1px solid rgba(255,255,255,.08);font-size:14.5px;line-height:1.4;text-align:right;font-weight:700;color:#F4EFE8;white-space:nowrap">4 %</td></tr><tr><td style="padding:14px 0;border-top:1px solid rgba(255,255,255,.08);font-size:14.5px;line-height:1.4;color:rgba(244,239,232,.78)">Au-delà de 100 000 €</td><td style="padding:14px 0;border-top:1px solid rgba(255,255,255,.08);font-size:14.5px;line-height:1.4;text-align:right;font-weight:700;color:#F4EFE8;white-space:nowrap">3 %</td></tr></tbody>
+        </table>
+        <p style="margin:14px 0 0;font-size:13px;line-height:1.5;color:rgba(244,239,232,.5)">Les taux s’appliquent par tranche, et non sur la totalité des achats.</p>
+      </div>
+      <div style="background:#0B0B0B;border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:28px 28px 24px;text-align:left">
+        <div style="font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#C41E3A">Exemple · 150 000 € d’achats</div>
+        <table style="margin-top:18px;width:100%;border-collapse:collapse">
+          <thead><tr><th scope="col" style="padding:0 0 12px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,239,232,.5);text-align:left">Tranche</th><th scope="col" style="padding:0 0 12px;font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,239,232,.5);text-align:right">Honoraires</th></tr></thead>
+          <tbody><tr><td style="padding:14px 0;border-top:1px solid rgba(255,255,255,.08);font-size:14.5px;line-height:1.4;color:rgba(244,239,232,.78)">Premiers 20 000 € × 7 %</td><td style="padding:14px 0;border-top:1px solid rgba(255,255,255,.08);font-size:14.5px;line-height:1.4;text-align:right;font-weight:700;color:#F4EFE8;white-space:nowrap">1 400 €</td></tr><tr><td style="padding:14px 0;border-top:1px solid rgba(255,255,255,.08);font-size:14.5px;line-height:1.4;color:rgba(244,239,232,.78)">30 000 € suivants × 5 %</td><td style="padding:14px 0;border-top:1px solid rgba(255,255,255,.08);font-size:14.5px;line-height:1.4;text-align:right;font-weight:700;color:#F4EFE8;white-space:nowrap">1 500 €</td></tr><tr><td style="padding:14px 0;border-top:1px solid rgba(255,255,255,.08);font-size:14.5px;line-height:1.4;color:rgba(244,239,232,.78)">50 000 € suivants × 4 %</td><td style="padding:14px 0;border-top:1px solid rgba(255,255,255,.08);font-size:14.5px;line-height:1.4;text-align:right;font-weight:700;color:#F4EFE8;white-space:nowrap">2 000 €</td></tr><tr><td style="padding:14px 0;border-top:1px solid rgba(255,255,255,.08);font-size:14.5px;line-height:1.4;color:rgba(244,239,232,.78)">50 000 € restants × 3 %</td><td style="padding:14px 0;border-top:1px solid rgba(255,255,255,.08);font-size:14.5px;line-height:1.4;text-align:right;font-weight:700;color:#F4EFE8;white-space:nowrap">1 500 €</td></tr>
+            <tr><td style="padding:16px 0 0;border-top:1px solid rgba(255,255,255,.2);font-size:15px;font-weight:700;color:#F4EFE8">Total des honoraires</td><td style="padding:16px 0 0;border-top:1px solid rgba(255,255,255,.2);text-align:right;font-size:22px;font-weight:800;color:#F4EFE8;white-space:nowrap">6 400 €</td></tr></tbody>
+        </table>
+        <p style="margin:14px 0 0;font-size:13px;line-height:1.5;color:rgba(244,239,232,.5)">Soit un taux effectif d’environ 4,27 % sur l’ensemble des achats.</p>
+      </div>
+    </div>
+    <div class="bea-reveal" style="margin-top:56px;text-align:center">
+      <h3 style="margin:0;font-size:clamp(20px,2.2vw,26px);font-weight:700;letter-spacing:-.01em;color:#F4EFE8">Des honoraires réglés selon l’avancement de votre projet</h3>
+      <div class="bea-paygrid" style="margin:26px auto 0;max-width:880px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;text-align:left"><div style="padding:22px 20px;border-top:1px solid rgba(196,30,58,.55)"><div style="font-size:30px;font-weight:800;letter-spacing:-.02em;color:#F4EFE8">20 %</div><div style="margin-top:6px;font-size:14px;line-height:1.45;color:rgba(244,239,232,.62);text-wrap:balance">à l’engagement de la mission</div></div><div style="padding:22px 20px;border-top:1px solid rgba(196,30,58,.55)"><div style="font-size:30px;font-weight:800;letter-spacing:-.02em;color:#F4EFE8">30 %</div><div style="margin-top:6px;font-size:14px;line-height:1.45;color:rgba(244,239,232,.62);text-wrap:balance">à la confirmation des commandes</div></div><div style="padding:22px 20px;border-top:1px solid rgba(196,30,58,.55)"><div style="font-size:30px;font-weight:800;letter-spacing:-.02em;color:#F4EFE8">50 %</div><div style="margin-top:6px;font-size:14px;line-height:1.45;color:rgba(244,239,232,.62);text-wrap:balance">avant le chargement des marchandises</div></div></div>
+      <p style="margin:18px auto 0;max-width:620px;font-size:13px;line-height:1.55;color:rgba(244,239,232,.5);text-wrap:pretty">Les honoraires sont calculés sur le montant des achats effectivement pilotés, avec régularisation si nécessaire.</p>
+      <p style="margin:8px auto 0;max-width:620px;font-size:13px;line-height:1.55;color:rgba(244,239,232,.5);text-wrap:pretty">Honoraires minimums : 750 € nets, après application des crédits commerciaux éligibles.</p>
+      <p style="margin:8px auto 0;max-width:620px;font-size:13px;line-height:1.55;color:rgba(244,239,232,.5);text-wrap:pretty">Les matériaux, le transport international, les frais de douane et les autres prestations externes sont facturés séparément.</p>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="bea-sec" style="margin-top:72px;padding:72px 80px 0">
+  <div class="bea-secgrid" style="display:grid;grid-template-columns:1fr;gap:0">
+    <div>
+      <button type="button" id="bea-faqtoggle" class="bea-reveal" aria-expanded="false" style="appearance:none;cursor:pointer;width:100%;max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:16px;padding:0;background:transparent;border:none;font-family:inherit;color:inherit;text-align:center"><span style="font-size:clamp(28px,3.2vw,44px);font-weight:700;line-height:1.16;letter-spacing:-.015em">Vos questions. Nos <span style="font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:1.1em;color:#C41E3A">réponses</span>.</span><svg class="bea-faqtoggle-chev" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C41E3A" stroke-width="2" style="flex:none;transition:transform .3s"><path d="M6 9l6 6 6-6"/></svg></button>
+      
+      <div id="bea-faqpanel" class="bea-reveal bea-faqgrid" style="margin-top:28px;display:grid;grid-template-columns:1fr;gap:12px;max-width:820px;margin-left:auto;margin-right:auto;align-items:start">
+        <details class="bea-faq" style="background:#1a1a1a;border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:0 22px;transition:border-color .3s">
+          <summary style="display:flex;align-items:center;gap:14px;padding:20px 0;font-size:14.5px;font-weight:600;line-height:1.4"><span style="flex:none;font-size:12px;font-weight:700;color:#C41E3A;letter-spacing:.04em">01</span><span style="flex:1">Puis-je confier à BEA des commandes déjà négociées avec mes fournisseurs ?</span><svg class="bea-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C41E3A" stroke-width="1.8" style="flex:none;transition:transform .3s"><path d="M6 9l6 6 6-6"/></svg></summary>
+          <div style="padding:0 0 22px 32px"><p style="margin:0px 0 0;font-size:13.5px;line-height:1.62;color:rgba(244,239,232,.6)">Oui. Vous pouvez solliciter BEA même si vous avez déjà sélectionné vos fabricants ou négocié vos achats.</p><p style="margin:8px 0 0;font-size:13.5px;line-height:1.62;color:rgba(244,239,232,.6)">Nous examinons les commandes concernées et leur état d’avancement afin de déterminer les opérations que nous pouvons prendre en charge.</p></div>
+        </details>
+        <details class="bea-faq" style="background:#1a1a1a;border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:0 22px;transition:border-color .3s">
+          <summary style="display:flex;align-items:center;gap:14px;padding:20px 0;font-size:14.5px;font-weight:600;line-height:1.4"><span style="flex:none;font-size:12px;font-weight:700;color:#C41E3A;letter-spacing:.04em">02</span><span style="flex:1">Puis-je effectuer mes achats progressivement, sur plusieurs mois ?</span><svg class="bea-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C41E3A" stroke-width="1.8" style="flex:none;transition:transform .3s"><path d="M6 9l6 6 6-6"/></svg></summary>
+          <div style="padding:0 0 22px 32px"><p style="margin:0px 0 0;font-size:13.5px;line-height:1.62;color:rgba(244,239,232,.6)">Oui. Le pilotage peut être organisé en plusieurs vagues de commandes ou d’expéditions, selon le calendrier de votre projet.</p><p style="margin:8px 0 0;font-size:13.5px;line-height:1.62;color:rgba(244,239,232,.6)">Les modalités de suivi et de facturation sont alors définies en fonction des différentes phases d’achats.</p></div>
+        </details>
+        <details class="bea-faq" style="background:#1a1a1a;border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:0 22px;transition:border-color .3s">
+          <summary style="display:flex;align-items:center;gap:14px;padding:20px 0;font-size:14.5px;font-weight:600;line-height:1.4"><span style="flex:none;font-size:12px;font-weight:700;color:#C41E3A;letter-spacing:.04em">03</span><span style="flex:1">Les frais de transport et de douane sont-ils inclus ?</span><svg class="bea-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C41E3A" stroke-width="1.8" style="flex:none;transition:transform .3s"><path d="M6 9l6 6 6-6"/></svg></summary>
+          <div style="padding:0 0 22px 32px"><p style="margin:0px 0 0;font-size:13.5px;line-height:1.62;color:rgba(244,239,232,.6)">Non. Nos honoraires couvrent le Pilotage des achats.</p><p style="margin:8px 0 0;font-size:13.5px;line-height:1.62;color:rgba(244,239,232,.6)">Les matériaux, le fret international, les droits et taxes de douane ainsi que les autres frais externes sont facturés séparément.</p></div>
+        </details>
+        <details class="bea-faq" style="background:#1a1a1a;border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:0 22px;transition:border-color .3s">
+          <summary style="display:flex;align-items:center;gap:14px;padding:20px 0;font-size:14.5px;font-weight:600;line-height:1.4"><span style="flex:none;font-size:12px;font-weight:700;color:#C41E3A;letter-spacing:.04em">04</span><span style="flex:1">Mes prestations BEA précédentes peuvent-elles être déduites ?</span><svg class="bea-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C41E3A" stroke-width="1.8" style="flex:none;transition:transform .3s"><path d="M6 9l6 6 6-6"/></svg></summary>
+          <div style="padding:0 0 22px 32px"><p style="margin:0px 0 0;font-size:13.5px;line-height:1.62;color:rgba(244,239,232,.6)">Oui, sous certaines conditions.</p><p style="margin:8px 0 0;font-size:13.5px;line-height:1.62;color:rgba(244,239,232,.6)">Le Diagnostic Stratégique et l’Étude de Finition peuvent donner droit à des crédits sur les honoraires de Pilotage des achats, selon les règles commerciales applicables à chaque prestation.</p><p style="margin:8px 0 0;font-size:13.5px;line-height:1.62;color:rgba(244,239,232,.6)">Les crédits sont soumis aux plafonds et conditions d’éligibilité prévus. Un minimum de 750 € d’honoraires nets reste applicable.</p></div>
+        </details>
+        <details class="bea-faq" style="background:#1a1a1a;border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:0 22px;transition:border-color .3s">
+          <summary style="display:flex;align-items:center;gap:14px;padding:20px 0;font-size:14.5px;font-weight:600;line-height:1.4"><span style="flex:none;font-size:12px;font-weight:700;color:#C41E3A;letter-spacing:.04em">05</span><span style="flex:1">BEA intervient-il également après l’arrivée des marchandises en Afrique ?</span><svg class="bea-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C41E3A" stroke-width="1.8" style="flex:none;transition:transform .3s"><path d="M6 9l6 6 6-6"/></svg></summary>
+          <div style="padding:0 0 22px 32px"><p style="margin:0px 0 0;font-size:13.5px;line-height:1.62;color:rgba(244,239,232,.6)">Le Pilotage des achats couvre les opérations convenues jusqu’à l’expédition.</p><p style="margin:8px 0 0;font-size:13.5px;line-height:1.62;color:rgba(244,239,232,.6)">Le dédouanement à destination, le transport local, le stockage après arrivée et l’installation des matériaux ne sont pas inclus dans cette prestation.</p></div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cta" class="bea-sec" style="margin-top:72px;padding:0 80px">
+  <div class="bea-ctahero" style="position:relative;max-width:600px;margin:0 auto;border-radius:28px;overflow:hidden;border:1px solid rgba(196,30,58,.22);box-shadow:0 0 60px rgba(245,51,63,.14),0 30px 80px rgba(0,0,0,.6)">
+    <img src="media/cta-portrait-s.jpg" loading="lazy" decoding="async" alt="Fondateur BEA" style="display:block;width:100%;aspect-ratio:600/900;object-fit:cover;object-position:50% 20%" />
+    <!-- readability gradient -->
+    <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(5,5,5,0) 0%,rgba(5,5,5,0) 30%,rgba(5,5,5,.55) 62%,rgba(5,5,5,.95) 100%)"></div>
+    <!-- content anchored bottom -->
+    <div style="position:absolute;left:0;right:0;bottom:0;padding:0 30px 34px;text-align:center">
+      <h2 style="margin:0 auto;max-width:480px;font-size:clamp(28px,4vw,40px);font-weight:800;line-height:1.1;letter-spacing:-.02em;color:#F4EFE8;text-wrap:balance">Vos matériaux méritent autant d’<span style="font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:1.06em;color:#C41E3A">attention</span> que votre projet.</h2>
+      <a class="bea-splitcta bea-ctafinal" href="#acces" style="position:relative;display:flex;align-items:center;justify-content:center;width:100%;height:64px;margin-top:24px;border-radius:50px;background:#C41E3A;color:#fff;font-size:16px;font-weight:700;letter-spacing:.02em;text-decoration:none;padding:0 22px 0 94px;white-space:nowrap">Confier mes achats à BEA<span class="bdg" style="position:absolute;left:6px;top:6px;display:flex;align-items:center;justify-content:center;width:72px;height:52px;border-radius:26px 8px 8px 26px;background:#111"><svg class="ar" width="26" height="22" viewBox="0 0 28 24" fill="none" stroke="#C41E3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute"><path d="M4 12h18M16 6l6 6-6 6"/></svg></span></a>
+      <p style="margin:14px 0 0;font-size:12.5px;line-height:1.5;color:rgba(244,239,232,.6)">Premier échange sans engagement.</p>
+      
+    </div>
+  </div>
+</section>
+
+<footer class="bea-sec" style="margin-top:64px;padding:34px 80px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+  <div style="display:flex;align-items:center;gap:14px">
+    <span style="font-weight:800;font-size:22px;letter-spacing:-.02em;line-height:1">bea<span style="color:#C41E3A">.</span></span>
+    <span style="width:1px;height:22px;background:rgba(255,255,255,.14)"></span>
+    <span style="font-size:9px;font-weight:600;letter-spacing:.16em;line-height:1.5;color:rgba(244,239,232,.4);text-transform:uppercase">Stratégie d'achat<br>Matériaux de finition</span>
+  </div>
+  <div style="font-size:12px;color:rgba(244,239,232,.4)">La première étape stratégique avant tout achat.</div>
+  <div style="font-size:11.5px;color:rgba(244,239,232,.3)">© BEA 2024 — Tous droits réservés</div>
+</footer>
+</div>
+
+<template id="__bundler_thumbnail" data-bg-color="#050505"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#050505"/><text x="50" y="60" font-family="Inter,system-ui,sans-serif" font-size="32" font-weight="800" fill="#F4EFE8" text-anchor="middle">bea<tspan fill="#C41E3A">.</tspan></text></svg></template></x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    // Scroll-reveal: arm elements, then reveal as they enter the viewport.
+    // Safe by design — a fallback timeout reveals everything if IO never fires.
+    const arm = () => {
+      const els = document.querySelectorAll('.bea-reveal:not(.bea-armed):not(.bea-shown)');
+      els.forEach(e => e.classList.add('bea-armed'));
+      if (!('IntersectionObserver' in window)) { els.forEach(e => e.classList.add('bea-shown')); return; }
+      const io = new IntersectionObserver((ents) => {
+        ents.forEach(en => { if (en.isIntersecting) { en.target.classList.add('bea-shown'); io.unobserve(en.target); } });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      els.forEach(e => {
+        const r = e.getBoundingClientRect();
+        if (r.top < window.innerHeight * 0.92) { e.classList.add('bea-shown'); }
+        else io.observe(e);
+      });
+    };
+    arm();
+    // Hero device parallax — subtle rise + tilt as it enters view
+    const stage = document.getElementById('beaHeroStage');
+    if (stage && !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      let ticking = false;
+      const upd = () => {
+        ticking = false;
+        const r = stage.getBoundingClientRect();
+        const vh = window.innerHeight || 800;
+        const p = Math.max(-1, Math.min(1, ((r.top + r.height / 2) - vh / 2) / vh));
+        stage.style.transform = 'translateY(' + (p * -20).toFixed(1) + 'px) rotateX(' + (p * 2.6).toFixed(2) + 'deg) scale(' + (1 - Math.abs(p) * 0.012).toFixed(4) + ')';
+      };
+      const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(upd); } };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      this._heroScroll = onScroll; upd();
+    }
+    // Hero grid — mouse parallax (subtle depth; disabled for reduced-motion & touch)
+    const grid = document.querySelector('.bea-herogrid');
+    if (grid && window.matchMedia && !window.matchMedia('(prefers-reduced-motion: reduce)').matches && window.matchMedia('(hover: hover)').matches) {
+      let gx = 0, gy = 0, tick = false;
+      const applyG = () => { tick = false; grid.style.transform = 'translate(' + gx.toFixed(1) + 'px,' + gy.toFixed(1) + 'px)'; };
+      const onMove = (e) => {
+        const w = window.innerWidth || 1, h = window.innerHeight || 1;
+        gx = ((e.clientX / w) - 0.5) * -52; // opposite to cursor = depth
+        gy = ((e.clientY / h) - 0.5) * -34;
+        if (!tick) { tick = true; requestAnimationFrame(applyG); }
+      };
+      grid.style.transition = 'transform .6s cubic-bezier(.16,1,.3,1)';
+      window.addEventListener('mousemove', onMove, { passive: true });
+      this._heroParallax = onMove;
+    }
+    // FAQ — single toggle: clicking the header opens all questions
+    const faqToggle = document.getElementById('bea-faqtoggle');
+    const faqPanel = document.getElementById('bea-faqpanel');
+    if (faqToggle && faqPanel) {
+      const setOpen = (open) => {
+        faqPanel.style.display = open ? 'grid' : 'none';
+        faqToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        const chev = faqToggle.querySelector('.bea-faqtoggle-chev');
+        if (chev) chev.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)';
+      };
+      faqToggle.addEventListener('click', () => setOpen(faqToggle.getAttribute('aria-expanded') !== 'true'));
+      setOpen(true);
+    }
+    this._t1 = setTimeout(arm, 500);
+    this._t2 = setTimeout(() => document.querySelectorAll('.bea-reveal').forEach(e => e.classList.add('bea-shown')), 4000);
+  }
+  componentWillUnmount() { clearTimeout(this._t1); clearTimeout(this._t2); if (this._heroScroll) { window.removeEventListener('scroll', this._heroScroll); window.removeEventListener('resize', this._heroScroll); } if (this._heroParallax) { window.removeEventListener('mousemove', this._heroParallax); } }
+}
+</script>
+</body>
+</html>
