@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+<script src="./image-slot.js"></script>
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:#050505;color:#F4EFE8;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:rgba(239,51,64,.3)}
+  image-slot{display:block}
+  details summary{list-style:none;cursor:pointer}
+  details summary::-webkit-details-marker{display:none}
+  details[open] .bea-chev{transform:rotate(180deg)}
+  @keyframes beaGlow{0%,100%{opacity:.5}50%{opacity:1}}
+  @keyframes beaSpin{to{transform:rotate(360deg)}}
+  @keyframes beaBeam{0%{top:2%}100%{top:88%}}
+  @keyframes beaFadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+  /* Reveal kept opacity-safe: content is always visible; the rise is a pure
+     transform enhancement that can't hide content if animations are throttled. */
+  @media(prefers-reduced-motion:no-preference){
+    .bea-reveal.bea-armed{transform:translateY(26px)}
+    .bea-reveal.bea-shown{transform:none;transition:transform .85s cubic-bezier(.16,1,.3,1)}
+  }
+  @keyframes beaNeon{0%,100%{box-shadow:0 0 16px rgba(239,51,64,.5),0 0 40px rgba(239,51,64,.28),0 12px 40px rgba(239,51,64,.32)}50%{box-shadow:0 0 26px rgba(239,51,64,.8),0 0 64px rgba(239,51,64,.46),0 12px 46px rgba(239,51,64,.36)}}
+  .bea-neon{animation:beaNeon 2.6s ease-in-out infinite}
+  /* ===== Split CTA — néon pulsé + badge glissant/morphant ===== */
+  @keyframes neonPulse{0%,100%{box-shadow:0 0 18px rgba(239,51,64,.5),0 0 40px rgba(239,51,64,.2)}50%{box-shadow:0 0 28px rgba(239,51,64,.8),0 0 60px rgba(239,51,64,.35)}}
+  .bea-splitcta{box-shadow:none;transition:padding 520ms cubic-bezier(.4,0,.2,1),box-shadow 320ms ease;-webkit-tap-highlight-color:transparent}
+  .bea-splitcta .bdg{transition:left 520ms cubic-bezier(.4,0,.2,1),border-radius 520ms cubic-bezier(.4,0,.2,1)}
+  .bea-splitcta:hover,.bea-splitcta:active,.bea-splitcta:focus-visible{padding:0 80px 0 28px!important;animation:neonPulse 2.8s ease-in-out infinite}
+  .bea-splitcta:hover .bdg,.bea-splitcta:active .bdg,.bea-splitcta:focus-visible .bdg{left:calc(100% - 55px)!important;border-radius:0 50px 50px 0!important}
+  @keyframes beaMarqL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes beaMarqR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+  @keyframes beaDriftUp{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+  @keyframes beaDriftDn{0%,100%{transform:translateY(0)}50%{transform:translateY(16px)}}
+  @keyframes beaDriftSway{0%,100%{transform:translateY(-8px)}50%{transform:translateY(8px)}}
+  @keyframes beaHeroIn{from{opacity:0}to{opacity:1}}
+  @keyframes beaBreathe{0%,100%{filter:brightness(.2) saturate(.82)}50%{filter:brightness(.46) saturate(.95)}}
+  .bea-heromarq{display:none}
+  @media(max-width:1024px){.bea-livgrid{grid-template-columns:1fr!important;max-width:620px;margin-left:auto!important;margin-right:auto!important}}
+  @media(max-width:1024px){.bea-pricegrid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+  @media(max-width:860px){.bea-incl{grid-template-columns:1fr!important}}
+  @media(max-width:1024px){.bea-steps4{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+  @media(max-width:640px){
+    .bea-steps4{grid-template-columns:1fr!important}
+    .bea-pricegrid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+    .bea-pcard{padding:16px 16px 17px!important;border-radius:18px!important}
+    .bea-pcard>div:nth-child(2){margin-top:10px!important;font-size:30px!important}
+    .bea-pcard>div:nth-child(3){margin:12px 0 10px!important}
+    .bea-pcard>div:nth-child(4){font-size:13.5px!important}
+    .bea-steps4{gap:10px!important}
+    .bea-steps4>div{display:grid!important;grid-template-columns:auto 1fr;align-items:center;column-gap:12px;padding:16px 18px 17px!important;border-radius:18px!important}
+    .bea-steps4>div>span{width:30px!important;height:30px!important;border-radius:9px!important;font-size:12px!important;box-shadow:0 2px 8px rgba(239,51,64,.3)!important}
+    .bea-steps4>div>div{margin-top:0!important;font-size:17px!important}
+    .bea-steps4>div>p{grid-column:1 / -1;margin:8px 0 0!important;font-size:13.5px!important;line-height:1.5!important}
+    .bea-g2{grid-template-columns:1fr!important}
+    .bea-audgrid4{grid-template-columns:repeat(2,minmax(0,1fr))!important;row-gap:36px!important}
+    .bea-audgrid4>div{border-right:none!important;padding:0 10px!important}.bea-herogrid{display:none!important}.bea-heromarq{display:block!important}}
+  .bea-cta:hover .bea-cta-badge{left:calc(100% - 46px)}
+  .bea-scen:hover{border-color:rgba(239,51,64,.5)!important;box-shadow:0 18px 50px rgba(239,51,64,.14),0 0 0 1px rgba(239,51,64,.35)}
+  .bea-pop{transform:scale(1.035)}
+  .bea-pricecta{transition:background .3s,color .3s,border-color .3s}
+  .bea-pricecta:hover{background:#EF3340;color:#fff;border-color:#EF3340}
+  .bea-pricecta-solid:hover{background:#a5182f;border-color:#a5182f}
+  .bea-scimg{will-change:auto}
+  .bea-recv{transition:border-color .35s,transform .35s,box-shadow .35s}
+  .bea-recv:hover{border-color:rgba(239,51,64,.4)!important;transform:translateY(-3px);box-shadow:0 14px 34px rgba(0,0,0,.4)}
+  .bea-tlcard{transition:border-color .35s,transform .35s,box-shadow .35s}
+  .bea-tlcard:hover{border-color:rgba(239,51,64,.4)!important;transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,.45)}
+  .bea-aud:hover{border-color:rgba(239,51,64,.3)!important}
+  @media(hover:hover){.bea-out:hover{border-color:rgba(239,51,64,.55)!important;background:rgba(239,51,64,.06)!important}}
+  .bea-out:active{border-color:rgba(239,51,64,.55)!important;background:rgba(239,51,64,.06)!important}
+  .bea-faq:hover{border-color:rgba(255,255,255,.14)!important}
+  .bea-navlink:hover{color:#F4EFE8!important}
+  .bea-chip:hover{border-color:rgba(239,51,64,.4)!important}
+  .bea-cfill{transition:transform .42s cubic-bezier(.16,1,.3,1)}
+  .bea-chip:hover .bea-cfill{transform:scale(1)!important}
+  .bea-cic{transition:stroke .35s}
+  .bea-chip:hover .bea-cic{stroke:#F4EFE8!important}
+  /* ---- Tablet ---- */
+  @media(max-width:1080px){
+    .bea-rail{display:none!important}
+    .bea-secgrid{grid-template-columns:1fr!important}
+    .bea-hero{grid-template-columns:1fr!important}
+    .bea-split{grid-template-columns:1fr!important}
+    .bea-g3{grid-template-columns:1fr!important}
+    .bea-g6{grid-template-columns:repeat(3,1fr)!important}
+    .bea-g4{grid-template-columns:repeat(2,1fr)!important}
+    .bea-g3c{grid-template-columns:repeat(2,1fr)!important}
+    .bea-audgrid{grid-template-columns:repeat(3,1fr)!important;gap:30px 0!important}
+    .bea-audgrid>div{border-right:none!important}
+    .bea-infocard{grid-template-columns:1fr!important;padding:34px 30px!important}
+    .bea-infocard>span[style*="align-self"]{display:none!important}
+    .bea-infoblock{padding:0!important}
+    .bea-pricerow{grid-template-columns:1fr!important;max-width:520px!important}
+    
+    .bea-libgrid{grid-template-columns:repeat(2,1fr)!important}
+    .bea-ctagrid{grid-template-columns:1fr!important}
+    .bea-sec{padding-left:44px!important;padding-right:44px!important}
+    .bea-navlink{display:none!important}
+    .bea-heroimg{height:360px!important}
+  }
+  /* ---- Mobile ---- */
+  @media(max-width:1024px){.bea-livgrid{grid-template-columns:1fr!important;max-width:620px;margin-left:auto!important;margin-right:auto!important}}
+  @media(max-width:1024px){.bea-pricegrid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+  @media(max-width:860px){.bea-incl{grid-template-columns:1fr!important}}
+  @media(max-width:1024px){.bea-steps4{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+  @media(max-width:640px){
+    .bea-steps4{grid-template-columns:1fr!important}
+    .bea-pricegrid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+    .bea-pcard{padding:16px 16px 17px!important;border-radius:18px!important}
+    .bea-pcard>div:nth-child(2){margin-top:10px!important;font-size:30px!important}
+    .bea-pcard>div:nth-child(3){margin:12px 0 10px!important}
+    .bea-pcard>div:nth-child(4){font-size:13.5px!important}
+    .bea-steps4{gap:10px!important}
+    .bea-steps4>div{display:grid!important;grid-template-columns:auto 1fr;align-items:center;column-gap:12px;padding:16px 18px 17px!important;border-radius:18px!important}
+    .bea-steps4>div>span{width:30px!important;height:30px!important;border-radius:9px!important;font-size:12px!important;box-shadow:0 2px 8px rgba(239,51,64,.3)!important}
+    .bea-steps4>div>div{margin-top:0!important;font-size:17px!important}
+    .bea-steps4>div>p{grid-column:1 / -1;margin:8px 0 0!important;font-size:13.5px!important;line-height:1.5!important}
+    .bea-g2{grid-template-columns:1fr!important}
+    .bea-audgrid4{grid-template-columns:repeat(2,minmax(0,1fr))!important;row-gap:36px!important}
+    .bea-audgrid4>div{border-right:none!important;padding:0 10px!important}
+    .bea-sec{padding-left:24px!important;padding-right:24px!important;margin-top:30px!important;padding-top:30px!important}
+    #hero{min-height:auto!important;padding:8px 0 10px!important}
+    .bea-herocta{margin-top:24px!important}
+    .bea-simstage{margin-top:10px!important;width:calc(100% + 36px)!important;margin-left:-18px!important;margin-right:-18px!important;max-width:none!important}
+    .bea-solsplit{gap:16px!important}
+    .bea-solsplit>div:last-child{width:calc(100% + 36px)!important;margin-left:-18px!important;margin-right:-18px!important}
+    .bea-fatigue{width:calc(100% + 36px)!important;margin-left:-18px!important;margin-right:-18px!important;max-width:none!important}
+    .bea-8p{width:calc(100% + 48px)!important;margin-left:-24px!important;margin-right:-24px!important;max-width:none!important}
+    .bea-8p img{-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 8%,#000 86%,transparent 100%)!important;mask-image:linear-gradient(to bottom,transparent 0%,#000 8%,#000 86%,transparent 100%)!important}
+    #hero h1{font-size:32px!important}
+    .bea-kw{flex-direction:column;align-items:center}
+    .bea-kwdot{display:none}
+    .bea-photoband{--t:96px!important;--g:10px!important;--p:16px!important}
+    .bea-sec h2{font-size:25px!important}
+    .bea-ctawrap{padding:16px 0 0!important}
+    .bea-ctaportrait{display:none!important}
+    .bea-ctatrust{display:none!important}
+    .bea-ctagrid{gap:18px!important}
+    #hero.bea-sec{padding-top:40px!important}
+    .bea-g6{grid-template-columns:1fr!important}
+    .bea-g4{grid-template-columns:1fr!important}
+    .bea-photo{margin-top:6px!important;min-height:230px!important}
+    .bea-audgrid{grid-template-columns:repeat(2,1fr)!important;gap:22px 0!important}
+    .bea-audgrid>div{padding:6px 14px!important}
+    .bea-step{grid-template-columns:70px 1fr!important;gap:24px!important}
+    .bea-num{width:64px!important;height:64px!important;font-size:22px!important}
+    .bea-tl-line{left:32px!important;bottom:100px!important}
+    .bea-pop{transform:none!important}
+    .bea-g3c{grid-template-columns:1fr!important}
+    .bea-faqgrid{grid-template-columns:1fr!important}
+    .bea-heroimg{height:300px!important;margin-top:24px!important}
+    .bea-board{height:320px!important}
+    .bea-net{height:320px!important}
+    .bea-ctatrust{flex-direction:column!important;gap:12px!important}
+    .bea-navcta{display:none!important}
+    header.bea-sec{padding:16px 24px!important;margin-top:0!important}
+    footer.bea-sec{padding-left:24px!important;padding-right:24px!important;flex-direction:column!important;align-items:flex-start!important;gap:14px!important}
+  }
+  @media(max-width:860px){.bea-incl{grid-template-columns:1fr!important}}
+  @media(max-width:1024px){.bea-steps4{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+  @media(max-width:640px){
+    .bea-steps4{grid-template-columns:1fr!important}
+    .bea-pricegrid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+    .bea-pcard{padding:16px 16px 17px!important;border-radius:18px!important}
+    .bea-pcard>div:nth-child(2){margin-top:10px!important;font-size:30px!important}
+    .bea-pcard>div:nth-child(3){margin:12px 0 10px!important}
+    .bea-pcard>div:nth-child(4){font-size:13.5px!important}
+    .bea-steps4{gap:10px!important}
+    .bea-steps4>div{display:grid!important;grid-template-columns:auto 1fr;align-items:center;column-gap:12px;padding:16px 18px 17px!important;border-radius:18px!important}
+    .bea-steps4>div>span{width:30px!important;height:30px!important;border-radius:9px!important;font-size:12px!important;box-shadow:0 2px 8px rgba(239,51,64,.3)!important}
+    .bea-steps4>div>div{margin-top:0!important;font-size:17px!important}
+    .bea-steps4>div>p{grid-column:1 / -1;margin:8px 0 0!important;font-size:13.5px!important;line-height:1.5!important}
+    .bea-g2{grid-template-columns:1fr!important}
+    .bea-audgrid4{grid-template-columns:repeat(2,minmax(0,1fr))!important;row-gap:36px!important}
+    .bea-audgrid4>div{border-right:none!important;padding:0 10px!important}}
+</style>
+</helmet>
+<div style="position:relative;width:100%;max-width:1440px;margin:0 auto">
+<div aria-hidden="true" style="position:fixed;inset:0;z-index:9998;pointer-events:none;opacity:.08;mix-blend-mode:overlay;background-image:url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAiIGhlaWdodD0iMTYwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC44IiBudW1PY3RhdmVzPSIyIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI24pIi8+PC9zdmc+')"></div>
+<div aria-hidden="true" style="position:fixed;inset:0;z-index:9997;pointer-events:none;background:radial-gradient(ellipse 120% 90% at 50% 40%,transparent 58%,rgba(0,0,0,.35) 100%)"></div>
+<header class="bea-sec" style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:3px 80px;background:rgba(5,5,5,.72);backdrop-filter:blur(14px)">
+  <a href="/tr/" style="display:flex;align-items:center;gap:14px;text-decoration:none">
+    <span style="font-weight:800;font-size:27px;letter-spacing:-.02em;color:#F4EFE8;line-height:1">bea<span style="color:#EF3340">.</span></span>
+  </a>
+</header>
+
+<section id="hero" style="position:relative;background:#050505;overflow:hidden;margin-top:-28px">
+
+  <!-- ===== Photo band : deux rangées défilantes ===== -->
+  <div class="bea-photoband" style="position:relative;overflow:hidden;--t:150px;--g:14px;--p:0px;height:calc(var(--p) + var(--t)*2 + var(--g) + 104px)">
+
+    <!-- Rangée 1 — défile vers la gauche -->
+    <div style="position:absolute;top:var(--p);left:0;right:0;overflow:hidden">
+      <div style="display:flex;gap:var(--g);width:max-content;animation:beaMarqL 62s linear infinite"><img src="hero/t1.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t2.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t3.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t4.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t5.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t6.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t7.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t8.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t9.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t1.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t2.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t3.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t4.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t5.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t6.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t7.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t8.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t9.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"></div>
+    </div>
+    <!-- Rangée 2 — défile vers la droite -->
+    <div style="position:absolute;top:calc(var(--p) + var(--t) + var(--g));left:0;right:0;overflow:hidden">
+      <div style="display:flex;gap:var(--g);width:max-content;animation:beaMarqR 62s linear infinite"><img src="hero/t10.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t11.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t12.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t13.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t14.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t15.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t16.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t17.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t18.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t10.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t11.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t12.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t13.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t14.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t15.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t16.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t17.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"><img src="hero/t18.jpg" loading="lazy" decoding="async" style="width:var(--t);height:var(--t);flex:none;border-radius:10px;object-fit:cover;filter:brightness(.42) saturate(.9)"></div>
+    </div>
+
+    <!-- fondus latéraux -->
+    <div style="position:absolute;top:0;left:0;width:80px;height:100%;background:linear-gradient(90deg,#050505,transparent);z-index:3;pointer-events:none"></div>
+    <div style="position:absolute;top:0;right:0;width:80px;height:100%;background:linear-gradient(270deg,#050505,transparent);z-index:3;pointer-events:none"></div>
+
+    <!-- dégradé noir vertical : haut net -> bas noir -->
+    <div style="position:absolute;inset:0;z-index:3;pointer-events:none;background:linear-gradient(to bottom,transparent 0%,transparent 44%,rgba(5,5,5,.32) 66%,rgba(5,5,5,.8) 87%,#050505 100%)"></div>
+
+    <!-- Titre superposé, en bas, chevauchant la 2e rangée -->
+    <div class="bea-reveal" style="position:absolute;left:0;right:0;bottom:22px;z-index:4;text-align:center;padding:0 28px">
+      <h1 style="margin:0 auto;max-width:820px;font-size:clamp(38px,5vw,68px);font-weight:800;line-height:1.04;letter-spacing:-.025em">Projenizden <span style="font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:1.1em;color:#EF3340">somut bir satın alma planına</span>.</h1>
+    </div>
+  </div>
+
+  <!-- ===== Sous-titre + CTA sur fond noir plein ===== -->
+  <div class="bea-reveal" style="position:relative;z-index:4;text-align:center;padding:22px 28px 4px;background:#050505">
+    <p style="margin:0 auto;max-width:540px;font-size:clamp(15px,1.6vw,17px);line-height:1.62;color:rgba(244,239,232,.7)">BEA, Türkiye ve Çin'deki satın almalarınızı hazırlamak için malzemelerinizi seçer, üreticilere danışır ve bütçenizi netleştirir.</p>
+    <div class="bea-herocta" style="margin-top:30px;display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap">
+      <a class="bea-splitcta" href="#tarifs" style="position:relative;display:inline-flex;align-items:center;justify-content:center;min-width:260px;height:52px;padding:0 28px 0 76px;border-radius:50px;background:#EF3340;color:#fff;font-family:Inter,sans-serif;font-size:16px;font-weight:600;letter-spacing:0;text-transform:none;text-decoration:none;overflow:hidden">Projemi etüt ettir<span class="bdg" aria-hidden="true" style="position:absolute;left:3px;top:3px;width:52px;height:calc(100% - 6px);border-radius:50px 0 0 50px;background:linear-gradient(135deg,#050505 0%,#151515 60%,#1f1f1f 100%);display:flex;align-items:center;justify-content:center;color:#EF3340;font-size:18px;font-weight:700;line-height:1">→</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="benefice" class="bea-sec" style="margin-top:48px;padding:52px 80px 0">
+  <div class="bea-secgrid" style="display:grid;grid-template-columns:1fr;gap:0">
+    <div>
+      <div class="bea-reveal" style="display:grid;grid-template-columns:1fr;gap:18px;max-width:620px;margin:0 auto;text-align:center">
+        <h2 style="margin:0;font-size:clamp(28px,3.2vw,44px);font-weight:700;line-height:1.16;letter-spacing:-.015em">Her şey <span style="font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:1.1em;color:#EF3340">ince işlerin seçiminde belirlenir</span>.</h2>
+        <div style="display:grid;gap:8px;max-width:480px;margin:0 auto"><p style="margin:0;font-size:15px;line-height:1.62;color:rgba(244,239,232,.6)">Her kalem için onlarca referans. <span style="color:rgba(244,239,232,.9);font-weight:600">Önemli olan, doğrularını doğru fiyatlarla seçmek.</span></p></div>
+      </div>
+
+      <div class="bea-reveal bea-simstage" style="position:relative;margin:8px auto 0;max-width:1160px;perspective:1600px">
+        <div id="beaHeroStage" style="position:relative;transform-style:preserve-3d;will-change:transform">
+          <!-- red depth glow (large, diffuse) -->
+          <div style="position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);width:78%;height:64%;background:radial-gradient(ellipse at center,rgba(239,51,64,.18),transparent 68%);filter:blur(110px);pointer-events:none"></div>
+          <!-- red glow (tighter, warmer core) -->
+          <div style="position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);width:40%;height:36%;background:radial-gradient(ellipse at center,rgba(239,51,64,.12),transparent 72%);filter:blur(48px);pointer-events:none"></div>
+          <!-- device + light overlays -->
+          <div style="position:relative">
+            <img src="media/etude-finition-ipad-v4.png" loading="lazy" decoding="async" alt="Tablette BEA İnce İşler Etüdü: Kalem 01, alüminyum doğrama — teknik kesit, seçenekler ve yüzey işlemleri, dikkat edilecek noktalar ve sonraki adımlar" style="position:relative;display:block;width:100%;height:auto;filter:drop-shadow(0 50px 80px rgba(0,0,0,.7))" />
+            <!-- emitted screen light -->
+            <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 58% 40% at 46% 33%,rgba(188,198,220,.10),transparent 60%);mix-blend-mode:screen"></div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</section>
+
+<section id="accompagnement" class="bea-sec" style="margin-top:40px;padding:52px 80px 0">
+  <div style="max-width:1180px;margin:0 auto">
+    <h2 class="bea-reveal" style="margin:0 auto;font-size:clamp(28px,3.2vw,44px);font-weight:700;line-height:1.16;letter-spacing:-.015em;max-width:640px;text-align:center;text-wrap:balance">Malzeme seçiminden bütçenizin <span style="font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:1.1em;color:#EF3340">kontrolüne</span> kadar.</h2>
+    <p class="bea-reveal" style="margin:18px auto 0;max-width:600px;text-align:center;font-size:15px;line-height:1.62;color:rgba(244,239,232,.6)">BEA, hedeflerinize ve bütçenize uygun şekilde malzemeleri seçer, üreticilere danışır ve fiyatları netleştirir.</p>
+    <div class="bea-reveal bea-steps4" style="margin-top:40px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px">
+        <div class="bea-recv" style="display:flex;flex-direction:column;padding:26px 24px 28px;background:#0B0B0B;border:1px solid rgba(255,255,255,.07);border-radius:22px;text-align:left">
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;background:#EF3340;box-shadow:0 4px 14px rgba(239,51,64,.35);font-size:15px;font-weight:800;color:#fff">01</span>
+          <div style="margin-top:20px;font-size:19px;font-weight:700;letter-spacing:-.01em;color:#F4EFE8">Seçmek</div>
+          <p style="margin:8px 0 0;font-size:14px;line-height:1.58;color:rgba(244,239,232,.58)">Her kaleme uygun malzemeleri, referansları ve yüzey işlemlerini belirlemek.</p>
+        </div>
+        <div class="bea-recv" style="display:flex;flex-direction:column;padding:26px 24px 28px;background:#0B0B0B;border:1px solid rgba(255,255,255,.07);border-radius:22px;text-align:left">
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;background:#EF3340;box-shadow:0 4px 14px rgba(239,51,64,.35);font-size:15px;font-weight:800;color:#fff">02</span>
+          <div style="margin-top:20px;font-size:19px;font-weight:700;letter-spacing:-.01em;color:#F4EFE8">Uyumlu hale getirmek</div>
+          <p style="margin:8px 0 0;font-size:14px;line-height:1.58;color:rgba(244,239,232,.58)">Farklı seçimler arasında estetik, teknik ve bütçesel tutarlılık sağlamak.</p>
+        </div>
+        <div class="bea-recv" style="display:flex;flex-direction:column;padding:26px 24px 28px;background:#0B0B0B;border:1px solid rgba(255,255,255,.07);border-radius:22px;text-align:left">
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;background:#EF3340;box-shadow:0 4px 14px rgba(239,51,64,.35);font-size:15px;font-weight:800;color:#fff">03</span>
+          <div style="margin-top:20px;font-size:19px;font-weight:700;letter-spacing:-.01em;color:#F4EFE8">Danışmak</div>
+          <p style="margin:8px 0 0;font-size:14px;line-height:1.58;color:rgba(244,239,232,.58)">İhtiyaçlarınıza uygun teklifler almak için Türkiye ve Çin'deki üreticilere başvurmak.</p>
+        </div>
+        <div class="bea-recv" style="display:flex;flex-direction:column;padding:26px 24px 28px;background:#0B0B0B;border:1px solid rgba(255,255,255,.07);border-radius:22px;text-align:left">
+          <span style="display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;background:#EF3340;box-shadow:0 4px 14px rgba(239,51,64,.35);font-size:15px;font-weight:800;color:#fff">04</span>
+          <div style="margin-top:20px;font-size:19px;font-weight:700;letter-spacing:-.01em;color:#F4EFE8">Fiyatlandırmak</div>
+          <p style="margin:8px 0 0;font-size:14px;line-height:1.58;color:rgba(244,239,232,.58)">Teklifleri karşılaştırmak ve fiyatları kalem kalem detaylı bir bütçede toplamak.</p>
+        </div>
+    </div>
+  </div>
+</section>
+
+<section id="livrables" class="bea-sec" style="margin-top:72px;padding:72px 80px 0">
+  <div style="max-width:1240px;margin:0 auto">
+    <h2 class="bea-reveal" style="margin:0 auto;font-size:clamp(28px,3.2vw,44px);font-weight:700;line-height:1.16;letter-spacing:-.015em;max-width:600px;text-align:center;text-wrap:balance">Kullanıma hazır <span style="font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:1.1em;color:#EF3340">yol haritanız</span>.</h2>
+    <p class="bea-reveal" style="margin:18px auto 0;max-width:540px;text-align:center;font-size:15px;line-height:1.62;color:rgba(244,239,232,.6)">İnce işlerinizin, seçiminden fiyatlandırmasına kadar eksiksiz ve belgelenmiş bir görünümü.</p>
+    <div class="bea-reveal bea-livgrid" style="margin-top:40px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px">
+      <figure class="bea-recv" style="margin:0;display:flex;flex-direction:column;background:#0B0B0B;border:1px solid rgba(255,255,255,.07);border-radius:24px;overflow:hidden;text-align:left">
+        <div style="position:relative;background:#050505"><img src="media/livrable-finition.png" loading="lazy" decoding="async" alt="BEA İnce İşler Dosyası örneği" style="display:block;width:100%;height:auto"><div style="position:absolute;left:0;right:0;bottom:0;height:28%;background:linear-gradient(180deg,transparent,#0B0B0B);pointer-events:none"></div></div>
+        <figcaption style="padding:6px 26px 28px">
+          <div style="display:flex;align-items:center;gap:12px"><span style="font-size:12px;font-weight:800;color:#EF3340;letter-spacing:.06em">01</span><span style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,239,232,.45)">Teslimat</span></div>
+          <div style="margin-top:10px;font-size:clamp(19px,1.8vw,22px);font-weight:700;letter-spacing:-.015em;line-height:1.2;color:#F4EFE8">İnce İşler Dosyası</div>
+          <p style="margin:10px 0 0;font-size:14px;line-height:1.58;color:rgba(244,239,232,.6)">Seçilen malzemeleri, referanslarını, özelliklerini ve tercih edilen üreticileri kalem kalem sunan görsel ve teknik bir dosya.</p>
+        </figcaption>
+      </figure>
+      <figure class="bea-recv" style="margin:0;display:flex;flex-direction:column;background:#0B0B0B;border:1px solid rgba(255,255,255,.07);border-radius:24px;overflow:hidden;text-align:left">
+        <div style="position:relative;background:#050505"><img src="media/livrable-chiffrage.png" loading="lazy" decoding="async" alt="BEA konsolide fiyatlandırma tablosu örneği" style="display:block;width:100%;height:auto"><div style="position:absolute;left:0;right:0;bottom:0;height:28%;background:linear-gradient(180deg,transparent,#0B0B0B);pointer-events:none"></div></div>
+        <figcaption style="padding:6px 26px 28px">
+          <div style="display:flex;align-items:center;gap:12px"><span style="font-size:12px;font-weight:800;color:#EF3340;letter-spacing:.06em">02</span><span style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,239,232,.45)">Teslimat</span></div>
+          <div style="margin-top:10px;font-size:clamp(19px,1.8vw,22px);font-weight:700;letter-spacing:-.015em;line-height:1.2;color:#F4EFE8">Konsolide fiyatlandırma dosyası</div>
+          <p style="margin:10px 0 0;font-size:14px;line-height:1.58;color:rgba(244,239,232,.6)">Kalemlere göre düzenlenmiş tüm üretici teklifleri; referanslar, miktarlar ve tedarikçi fiyatlarıyla birlikte.</p>
+        </figcaption>
+      </figure>
+      <figure class="bea-recv" style="margin:0;display:flex;flex-direction:column;background:#0B0B0B;border:1px solid rgba(255,255,255,.07);border-radius:24px;overflow:hidden;text-align:left">
+        <div style="position:relative;background:#050505"><img src="media/livrable-logistique.png" loading="lazy" decoding="async" alt="BEA lojistik simülasyon örneği" style="display:block;width:100%;height:auto"><div style="position:absolute;left:0;right:0;bottom:0;height:28%;background:linear-gradient(180deg,transparent,#0B0B0B);pointer-events:none"></div></div>
+        <figcaption style="padding:6px 26px 28px">
+          <div style="display:flex;align-items:center;gap:12px"><span style="font-size:12px;font-weight:800;color:#EF3340;letter-spacing:.06em">03</span><span style="font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(244,239,232,.45)">Teslimat</span></div>
+          <div style="margin-top:10px;font-size:clamp(19px,1.8vw,22px);font-weight:700;letter-spacing:-.015em;line-height:1.2;color:#F4EFE8">Lojistik simülasyon</div>
+          <p style="margin:10px 0 0;font-size:14px;line-height:1.58;color:rgba(244,239,232,.6)">Satın almalarınızın toplam maliyetini değerlendirmek için hacimlerin, taşımanın ve lojistik maliyetlerin tahmini.</p>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section id="processus" class="bea-sec" style="margin-top:72px;padding:72px 80px 0">
+  <div style="max-width:760px;margin:0 auto">
+    <h2 class="bea-reveal" style="margin:0 auto;font-size:clamp(28px,3.2vw,44px);font-weight:700;line-height:1.16;letter-spacing:-.015em;max-width:620px;text-align:center;text-wrap:balance">Adım adım <span style="font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:1.1em;color:#EF3340">İnce İşler Etüdünüz nasıl ilerler</span> ?</h2>
+    <div class="bea-reveal" style="position:relative;margin:44px auto 0;max-width:640px">
+      <div aria-hidden="true" style="position:absolute;left:26px;top:52px;bottom:52px;width:1px;background:linear-gradient(to bottom,rgba(239,51,64,.55),rgba(239,51,64,.18))"><span style="position:absolute;left:-1px;width:3px;height:22%;border-radius:3px;background:linear-gradient(to bottom,transparent,#ff4152,transparent);box-shadow:0 0 14px rgba(239,51,64,.9),0 0 28px rgba(239,51,64,.45);animation:beaBeam 3.4s linear infinite"></span></div>
+      <div style="position:relative;display:grid;grid-template-columns:52px 1fr;gap:28px;padding-bottom:38px">
+        <span style="position:relative;z-index:2;width:52px;height:52px;border-radius:50%;border:1px solid rgba(239,51,64,.55);background:#050505;color:#EF3340;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;letter-spacing:.04em">01</span>
+        <div style="padding-top:11px">
+          <h3 style="margin:0;font-size:clamp(19px,1.9vw,22px);font-weight:700;letter-spacing:-.015em;line-height:1.25;color:#F4EFE8">Projenin değerlendirilmesi</h3>
+          <p style="margin:10px 0 0;max-width:520px;font-size:14.5px;line-height:1.65;color:rgba(244,239,232,.58)">Etüdün kapsamını belirlemek için planlarınızı, teknik belgelerinizi, ihtiyaçlarınızı ve önceliklerinizi inceleriz.</p>
+        </div>
+      </div>
+      <div style="position:relative;display:grid;grid-template-columns:52px 1fr;gap:28px;padding-bottom:38px">
+        <span style="position:relative;z-index:2;width:52px;height:52px;border-radius:50%;border:1px solid rgba(239,51,64,.55);background:#050505;color:#EF3340;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;letter-spacing:.04em">02</span>
+        <div style="padding-top:11px">
+          <h3 style="margin:0;font-size:clamp(19px,1.9vw,22px);font-weight:700;letter-spacing:-.015em;line-height:1.25;color:#F4EFE8">Hizmetin onaylanması</h3>
+          <p style="margin:10px 0 0;max-width:520px;font-size:14.5px;line-height:1.65;color:rgba(244,239,232,.58)">İlgili kalemleri, teslimatları, fiyatı ve uygulama koşullarını teyit ederiz.</p>
+        </div>
+      </div>
+      <div style="position:relative;display:grid;grid-template-columns:52px 1fr;gap:28px;padding-bottom:38px">
+        <span style="position:relative;z-index:2;width:52px;height:52px;border-radius:50%;border:1px solid rgba(239,51,64,.55);background:#050505;color:#EF3340;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;letter-spacing:.04em">03</span>
+        <div style="padding-top:11px">
+          <h3 style="margin:0;font-size:clamp(19px,1.9vw,22px);font-weight:700;letter-spacing:-.015em;line-height:1.25;color:#F4EFE8">Etüdün gerçekleştirilmesi</h3>
+          <p style="margin:10px 0 0;max-width:520px;font-size:14.5px;line-height:1.65;color:rgba(244,239,232,.58)">Ekibimiz malzemeleri seçer, üreticilere danışır ve teklifleri bir araya getirir.</p>
+        </div>
+      </div>
+      <div style="position:relative;display:grid;grid-template-columns:52px 1fr;gap:28px;padding-bottom:0px">
+        <span style="position:relative;z-index:2;width:52px;height:52px;border-radius:50%;border:1px solid rgba(239,51,64,.55);background:#050505;color:#EF3340;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;letter-spacing:.04em">04</span>
+        <div style="padding-top:11px">
+          <h3 style="margin:0;font-size:clamp(19px,1.9vw,22px);font-weight:700;letter-spacing:-.015em;line-height:1.25;color:#F4EFE8">Teslimatların sunulması</h3>
+          <p style="margin:10px 0 0;max-width:520px;font-size:14.5px;line-height:1.65;color:rgba(244,239,232,.58)">Kişiye özel etüdünüzü, sonraki adımlara hazırlanmanız için önerilerimizle birlikte alırsınız.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tarifs" class="bea-sec" style="margin-top:72px;padding:72px 80px 0">
+  <div style="max-width:1180px;margin:0 auto;text-align:center">
+    <h2 class="bea-reveal" style="margin:0 auto;font-size:clamp(28px,3.2vw,44px);font-weight:700;line-height:1.16;letter-spacing:-.015em;max-width:620px;text-wrap:balance">Peki<span style="font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:1.1em;color:#EF3340">İnce İşler Etüdünün maliyeti ne kadar</span> ?</h2>
+    <p class="bea-reveal" style="margin:18px auto 0;max-width:580px;font-size:15px;line-height:1.62;color:rgba(244,239,232,.6)">Etüt edilecek ince işler kalemi sayısına göre belirlenen dört paket.</p>
+    <div class="bea-reveal bea-pricegrid" style="margin:40px auto 0;max-width:720px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:stretch"><div class="bea-pcard" style="display:flex;flex-direction:column;padding:22px 22px 22px;background:#161616;border:1px solid rgba(255,255,255,.14);border-radius:24px;box-shadow:0 10px 34px rgba(0,0,0,.45);text-align:left"><div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,239,232,.55)">Paket <span style="color:#EF3340">S</span></div><div style="margin-top:12px;font-size:clamp(34px,3.4vw,44px);font-weight:800;letter-spacing:-.02em;line-height:1;white-space:nowrap">500<span style="font-size:.42em;color:#EF3340;font-weight:700">&nbsp;€</span></div><div style="height:1px;background:rgba(255,255,255,.1);margin:14px 0 12px"></div><div style="font-size:15px;font-weight:600;line-height:1.4;color:rgba(244,239,232,.9)">1 - 3 kalem</div></div><div class="bea-pcard" style="display:flex;flex-direction:column;padding:22px 22px 22px;background:#161616;border:1px solid rgba(255,255,255,.14);border-radius:24px;box-shadow:0 10px 34px rgba(0,0,0,.45);text-align:left"><div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,239,232,.55)">Paket <span style="color:#EF3340">M</span></div><div style="margin-top:12px;font-size:clamp(34px,3.4vw,44px);font-weight:800;letter-spacing:-.02em;line-height:1;white-space:nowrap">750<span style="font-size:.42em;color:#EF3340;font-weight:700">&nbsp;€</span></div><div style="height:1px;background:rgba(255,255,255,.1);margin:14px 0 12px"></div><div style="font-size:15px;font-weight:600;line-height:1.4;color:rgba(244,239,232,.9)">4 - 6 kalem</div></div><div class="bea-pcard" style="display:flex;flex-direction:column;padding:22px 22px 22px;background:#161616;border:1px solid rgba(255,255,255,.14);border-radius:24px;box-shadow:0 10px 34px rgba(0,0,0,.45);text-align:left"><div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,239,232,.55)">Paket <span style="color:#EF3340">L</span></div><div style="margin-top:12px;font-size:clamp(34px,3.4vw,44px);font-weight:800;letter-spacing:-.02em;line-height:1;white-space:nowrap">1 000<span style="font-size:.42em;color:#EF3340;font-weight:700">&nbsp;€</span></div><div style="height:1px;background:rgba(255,255,255,.1);margin:14px 0 12px"></div><div style="font-size:15px;font-weight:600;line-height:1.4;color:rgba(244,239,232,.9)">7 - 10 kalem</div></div><div class="bea-pcard" style="display:flex;flex-direction:column;padding:22px 22px 22px;background:#161616;border:1px solid rgba(255,255,255,.14);border-radius:24px;box-shadow:0 10px 34px rgba(0,0,0,.45);text-align:left"><div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,239,232,.55)">Paket <span style="color:#EF3340">XL</span></div><div style="margin-top:12px;font-size:clamp(34px,3.4vw,44px);font-weight:800;letter-spacing:-.02em;line-height:1;white-space:nowrap">2 000<span style="font-size:.42em;color:#EF3340;font-weight:700">&nbsp;€</span></div><div style="height:1px;background:rgba(255,255,255,.1);margin:14px 0 12px"></div><div style="font-size:15px;font-weight:600;line-height:1.4;color:rgba(244,239,232,.9)">10'dan fazla kalem</div></div></div>
+    <div class="bea-reveal" style="margin:28px auto 0;max-width:720px;background:#0B0B0B;border:1px solid rgba(255,255,255,.07);border-radius:22px;overflow:hidden;text-align:left">
+      <div style="padding:26px 28px 24px">
+        <div style="font-size:17px;font-weight:700;line-height:1.35;color:#F4EFE8">Paket ne olursa olsun aynı metodoloji.</div>
+        <p style="margin:10px 0 0;max-width:580px;font-size:14px;line-height:1.58;color:rgba(244,239,232,.62)">Fiyatlar alana, konut tiplerine ve dosyanın karmaşıklığına göre ayarlanabilir. Kesin tutar, herhangi bir taahhütten önce size bildirilir.</p>
+      </div>
+      <div style="height:1px;background:rgba(255,255,255,.07)"></div>
+      <div style="display:flex;gap:14px;padding:22px 28px 24px;background:rgba(255,255,255,.015)">
+        <span aria-hidden="true" style="flex:none;width:24px;height:24px;border-radius:50%;border:1px solid rgba(239,51,64,.6);color:#EF3340;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;font-family:Georgia,serif;font-style:italic">i</span>
+        <div>
+          <div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,239,232,.75)">Bilmekte fayda var</div>
+          <p style="margin:8px 0 0;max-width:560px;font-size:13.5px;line-height:1.58;color:rgba(244,239,232,.62)">İnce İşler Etüdü satın almalarınızı hazırlar. Uygulamasını kapsamaz: siparişler, üretim takibi ve sevkiyat.</p>
+          <p style="margin:10px 0 0;max-width:560px;font-size:13.5px;line-height:1.58;color:rgba(244,239,232,.62)">Bu adımları şu hizmetimiz üstlenebilir: <span style="color:#F4EFE8;font-weight:600">Satın Alma Yönetimi</span>.</p>
+        </div>
+      </div>
+    </div>
+    <div class="bea-reveal" style="position:relative;margin:18px auto 0;max-width:720px;border-radius:23px;padding:1px;overflow:hidden">
+      <div aria-hidden="true" style="position:absolute;inset:-60%;background:conic-gradient(from 0deg at 50% 50%,transparent 0deg,transparent 312deg,rgba(239,51,64,.35) 332deg,#EF3340 346deg,rgba(239,51,64,.35) 360deg);animation:beaSpin 7s linear infinite"></div>
+      <div style="position:relative;z-index:2;background:#0B0B0B;border:1px solid rgba(255,255,255,.1);border-radius:22px;padding:30px 30px 28px;text-align:left">
+        <div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#EF3340">Yatırımınız sizinle birlikte ilerler</div>
+        <div style="margin-top:14px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap"><span style="font-size:clamp(40px,6vw,54px);font-weight:800;letter-spacing:-.02em;line-height:1;color:#F4EFE8">100<span style="color:#EF3340"> %</span></span><span style="font-size:16px;font-weight:600;line-height:1.35;color:rgba(244,239,232,.9);max-width:400px">oranında Stratejik Ön Analiz tutarınız, İnce İşler Etüdü fiyatınızdan düşülebilir.</span></div>
+        <div style="height:1px;background:rgba(255,255,255,.08);margin:22px 0 18px"></div>
+        <p style="margin:0;max-width:600px;font-size:14px;line-height:1.62;color:rgba(244,239,232,.62)">Ayrıca <span style="color:#F4EFE8;font-weight:600">Satın Alma Yönetimi</span> hizmetimizle devam ederseniz, hazırlığa yatırdığınız tutarlar öngörülen koşullara göre hizmet bedelimize de mahsup edilebilir.</p>
+        <a href="#conditions" style="margin-top:16px;display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#F4EFE8;text-decoration:none;border-bottom:1px solid rgba(239,51,64,.5);padding-bottom:3px;transition:border-color .3s,color .3s" style-hover="color:#fff;border-color:#EF3340">Ticari koşulları görün<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#EF3340" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+    <div class="bea-reveal" style="margin-top:30px;display:flex;justify-content:center">
+      <a class="bea-splitcta" href="#cta" style="position:relative;display:inline-flex;align-items:center;justify-content:center;min-width:260px;height:52px;padding:0 28px 0 76px;border-radius:50px;background:#EF3340;color:#fff;font-family:Inter,sans-serif;font-size:16px;font-weight:600;letter-spacing:0;text-transform:none;text-decoration:none;overflow:hidden">Projemi etüt ettir<span class="bdg" aria-hidden="true" style="position:absolute;left:3px;top:3px;width:52px;height:calc(100% - 6px);border-radius:50px 0 0 50px;background:linear-gradient(135deg,#050505 0%,#151515 60%,#1f1f1f 100%);display:flex;align-items:center;justify-content:center;color:#EF3340;font-size:18px;font-weight:700;line-height:1">→</span></a>
+    </div>
+  </div>
+</section>
+
+<section id="audience" class="bea-sec" style="margin-top:72px;padding:72px 80px 0">
+  <div style="max-width:1180px;margin:0 auto;text-align:center">
+    <h2 class="bea-reveal" style="margin:0 auto;max-width:620px;font-size:clamp(28px,3.2vw,44px);font-weight:700;line-height:1.16;letter-spacing:-.015em;text-wrap:balance">Yüksek <span style="font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:1.1em;color:#EF3340">standartlarla inşa edenler için</span>.</h2>
+    <p class="bea-reveal" style="margin:18px auto 0;max-width:580px;font-size:15px;line-height:1.62;color:rgba(244,239,232,.6)">İnce işlerini yapılandırmak ve sipariş vermeden önce somut tekliflere sahip olmak isteyen gayrimenkul proje sahipleri için tasarlanmış bir etüt.</p>
+    <div class="bea-reveal bea-audgrid4" style="margin:52px auto 64px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr))">
+      <div style="padding:8px 24px;border-right:1px solid rgba(255,255,255,.07);text-align:center"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#EF3340" stroke-width="1.4" style="margin:0 auto 18px;filter:drop-shadow(0 0 14px rgba(239,51,64,.38))"><path d="M3 21V7l7-4 7 4v14"/><path d="M21 21H3M7 10h0M11 10h0M7 14h0M11 14h0"/></svg><div style="font-size:19px;font-weight:700;letter-spacing:-.015em;line-height:1.25">Gayrimenkul geliştiriciler</div><p style="margin:10px auto 0;max-width:240px;font-size:13.5px;line-height:1.55;color:rgba(244,239,232,.55)">Projelerindeki ince işleri uyumlu hale getirmek ve kalem bazında bütçeleri kontrol etmek için.</p></div>
+      <div style="padding:8px 24px;border-right:1px solid rgba(255,255,255,.07);text-align:center"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#EF3340" stroke-width="1.4" style="margin:0 auto 18px;filter:drop-shadow(0 0 14px rgba(239,51,64,.38))"><path d="M4 21V5l8-3v19M12 21V8l8 3v10M4 21h16"/></svg><div style="font-size:19px;font-weight:700;letter-spacing:-.015em;line-height:1.25">İnşaat firmaları</div><p style="margin:10px auto 0;max-width:240px;font-size:13.5px;line-height:1.55;color:rgba(244,239,232,.55)">Şantiyelerine uygun seçilmiş malzemelere ve üretici tekliflerine sahip olmak için.</p></div>
+      <div style="padding:8px 24px;border-right:1px solid rgba(255,255,255,.07);text-align:center"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#EF3340" stroke-width="1.4" style="margin:0 auto 18px;filter:drop-shadow(0 0 14px rgba(239,51,64,.38))"><path d="M4 19l5-5 3 3 7-8"/><path d="M16 9h4v4"/></svg><div style="font-size:19px;font-weight:700;letter-spacing:-.015em;line-height:1.25">Yatırımcılar</div><p style="margin:10px auto 0;max-width:240px;font-size:13.5px;line-height:1.55;color:rgba(244,239,232,.55)">Kaliteden ve kârlılıktan ödün vermeden ince işler maliyetlerini optimize etmek için.</p></div>
+      <div style="padding:8px 24px;text-align:center"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#EF3340" stroke-width="1.4" style="margin:0 auto 18px;filter:drop-shadow(0 0 14px rgba(239,51,64,.38))"><path d="M3 21L12 3l9 18M7 21l5-10 5 10"/></svg><div style="font-size:19px;font-weight:700;letter-spacing:-.015em;line-height:1.25">Mimarlar</div><p style="margin:10px auto 0;max-width:240px;font-size:13.5px;line-height:1.55;color:rgba(244,239,232,.55)">Şartnamelerini projeye uygun, somut ve fiyatlandırılmış seçimlere dönüştürmek için.</p></div>
+    </div>
+  </div>
+</section>
+
+
+<section id="faq" class="bea-sec" style="margin-top:72px;padding:72px 80px 0">
+  <div class="bea-secgrid" style="display:grid;grid-template-columns:1fr;gap:0">
+    <div>
+      <button type="button" id="bea-faqtoggle" class="bea-reveal" aria-expanded="false" style="appearance:none;cursor:pointer;width:100%;max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:16px;padding:0;background:transparent;border:none;font-family:inherit;color:inherit;text-align:center"><span style="font-size:clamp(28px,3.2vw,44px);font-weight:700;line-height:1.16;letter-spacing:-.015em">Sıkça sorulan <span style="font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:1.1em;color:#EF3340">sorular</span>.</span><svg class="bea-faqtoggle-chev" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#EF3340" stroke-width="2" style="flex:none;transition:transform .3s"><path d="M6 9l6 6 6-6"/></svg></button>
+      
+      <div id="bea-faqpanel" class="bea-reveal bea-faqgrid" style="margin-top:28px;display:grid;grid-template-columns:1fr;gap:12px;max-width:820px;margin-left:auto;margin-right:auto;align-items:start">
+        <details class="bea-faq" style="background:#1a1a1a;border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:0 22px;transition:border-color .3s">
+          <summary style="display:flex;align-items:center;gap:14px;padding:20px 0;font-size:14.5px;font-weight:600;line-height:1.4"><span style="flex:none;font-size:12px;font-weight:700;color:#EF3340;letter-spacing:.04em">01</span><span style="flex:1">Başlamak için hangi belgeleri sağlamalıyım?</span><svg class="bea-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EF3340" stroke-width="1.8" style="flex:none;transition:transform .3s"><path d="M6 9l6 6 6-6"/></svg></summary>
+          <p style="margin:0;padding:0 0 22px 32px;font-size:13.5px;line-height:1.62;color:rgba(244,239,232,.6)">İdeal olarak planlarınızı, metrajlarınızı, ilham görsellerinizi ve varsa teknik şartnamelerinizi. Bazı belgeler eksikse dosyanızı değerlendirir ve başlamak için gerekli bilgileri size bildiririz.</p>
+        </details>
+        <details class="bea-faq" style="background:#1a1a1a;border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:0 22px;transition:border-color .3s">
+          <summary style="display:flex;align-items:center;gap:14px;padding:20px 0;font-size:14.5px;font-weight:600;line-height:1.4"><span style="flex:none;font-size:12px;font-weight:700;color:#EF3340;letter-spacing:.04em">02</span><span style="flex:1">Önce mutlaka bir Stratejik Ön Analiz yaptırmam gerekir mi?</span><svg class="bea-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EF3340" stroke-width="1.8" style="flex:none;transition:transform .3s"><path d="M6 9l6 6 6-6"/></svg></summary>
+          <p style="margin:0;padding:0 0 22px 32px;font-size:13.5px;line-height:1.62;color:rgba(244,239,232,.6)">Hayır. Projeniz yeterince tanımlıysa ve gerekli bilgilere sahipseniz doğrudan İnce İşler Etüdüne geçebilirsiniz.</p>
+        </details>
+        <details class="bea-faq" style="background:#1a1a1a;border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:0 22px;transition:border-color .3s">
+          <summary style="display:flex;align-items:center;gap:14px;padding:20px 0;font-size:14.5px;font-weight:600;line-height:1.4"><span style="flex:none;font-size:12px;font-weight:700;color:#EF3340;letter-spacing:.04em">03</span><span style="flex:1">Üreticilerden alınan fiyatlar kesin mi?</span><svg class="bea-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EF3340" stroke-width="1.8" style="flex:none;transition:transform .3s"><path d="M6 9l6 6 6-6"/></svg></summary>
+          <p style="margin:0;padding:0 0 22px 32px;font-size:13.5px;line-height:1.62;color:rgba(244,239,232,.6)">Teklifler doğrudan danışılan üreticilerden gelir. Geçerlilik koşullarına tabidir ve siparişler teyit edilene kadar değişebilir.</p>
+        </details>
+        <details class="bea-faq" style="background:#1a1a1a;border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:0 22px;transition:border-color .3s">
+          <summary style="display:flex;align-items:center;gap:14px;padding:20px 0;font-size:14.5px;font-weight:600;line-height:1.4"><span style="flex:none;font-size:12px;font-weight:700;color:#EF3340;letter-spacing:.04em">04</span><span style="flex:1">Etüdü aldıktan sonra seçimlerimi değiştirebilir miyim?</span><svg class="bea-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EF3340" stroke-width="1.8" style="flex:none;transition:transform .3s"><path d="M6 9l6 6 6-6"/></svg></summary>
+          <p style="margin:0;padding:0 0 22px 32px;font-size:13.5px;line-height:1.62;color:rgba(244,239,232,.6)">Evet. Başlangıçtaki kapsam dahilinde iki tur düzeltme paketinize dahildir. Önemli değişiklikler için ek bir teklif sunulur.</p>
+        </details>
+        <details class="bea-faq" style="background:#1a1a1a;border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:0 22px;transition:border-color .3s">
+          <summary style="display:flex;align-items:center;gap:14px;padding:20px 0;font-size:14.5px;font-weight:600;line-height:1.4"><span style="flex:none;font-size:12px;font-weight:700;color:#EF3340;letter-spacing:.04em">05</span><span style="flex:1">İnce İşler Etüdü siparişleri ve sevkiyatı kapsar mı?</span><svg class="bea-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EF3340" stroke-width="1.8" style="flex:none;transition:transform .3s"><path d="M6 9l6 6 6-6"/></svg></summary>
+          <p style="margin:0;padding:0 0 22px 32px;font-size:13.5px;line-height:1.62;color:rgba(244,239,232,.6)">Hayır. Satın almalarınızı hazırlamanızı ve fiyatlandırmanızı sağlar. Siparişler, üretim takibi, kalite kontrol ve sevkiyat, Satın Alma Yönetimi hizmetimizin kapsamındadır.</p>
+        </details>
+        <details class="bea-faq" style="background:#1a1a1a;border:1px solid rgba(255,255,255,.07);border-radius:18px;padding:0 22px;transition:border-color .3s">
+          <summary style="display:flex;align-items:center;gap:14px;padding:20px 0;font-size:14.5px;font-weight:600;line-height:1.4"><span style="flex:none;font-size:12px;font-weight:700;color:#EF3340;letter-spacing:.04em">06</span><span style="flex:1">Ardından satın almalarımı BEA'ya emanet edersem ne olur?</span><svg class="bea-chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EF3340" stroke-width="1.8" style="flex:none;transition:transform .3s"><path d="M6 9l6 6 6-6"/></svg></summary>
+          <p style="margin:0;padding:0 0 22px 32px;font-size:13.5px;line-height:1.62;color:rgba(244,239,232,.6)">Satın Alma Yönetimi hizmetimizle devam edebilirsiniz. Hazırlık için ödediğiniz tutarlar, geçerli ticari koşullara bağlı olarak hizmet bedelimize mahsup edilebilir.</p>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cta" class="bea-sec" style="margin-top:72px;padding:0 80px">
+  <div class="bea-ctahero" style="position:relative;max-width:600px;margin:0 auto;border-radius:28px;overflow:hidden;border:1px solid rgba(239,51,64,.22);box-shadow:0 0 60px rgba(239,51,64,.14),0 30px 80px rgba(0,0,0,.6)">
+    <img src="media/cta-portrait-s.jpg" loading="lazy" decoding="async" alt="BEA Kurucusu" style="display:block;width:100%;aspect-ratio:600/900;object-fit:cover;object-position:50% 20%" />
+    <!-- readability gradient -->
+    <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(5,5,5,0) 0%,rgba(5,5,5,0) 30%,rgba(5,5,5,.55) 62%,rgba(5,5,5,.95) 100%)"></div>
+    <!-- content anchored bottom -->
+    <div style="position:absolute;left:0;right:0;bottom:0;padding:0 30px 34px;text-align:center">
+      <h2 style="margin:0 auto;max-width:480px;font-size:clamp(28px,4vw,40px);font-weight:800;line-height:1.1;letter-spacing:-.02em;color:#F4EFE8">İnce işleriniz <span style="font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:1.06em;color:#EF3340">tahminlerden fazlasını hak ediyor</span>.</h2>
+      <p style="margin:14px auto 0;max-width:440px;font-size:15px;line-height:1.55;color:rgba(244,239,232,.72)">Seçilmiş malzemeler, üretici fiyatları ve kontrol altında bir bütçe.</p>
+      <a class="bea-splitcta" href="#tarifs" style="position:relative;display:flex;align-items:center;justify-content:center;width:100%;margin-top:24px;min-width:260px;height:52px;padding:0 28px 0 76px;border-radius:50px;background:#EF3340;color:#fff;font-family:Inter,sans-serif;font-size:16px;font-weight:600;letter-spacing:0;text-transform:none;text-decoration:none;overflow:hidden">Projemi etüt ettir<span class="bdg" aria-hidden="true" style="position:absolute;left:3px;top:3px;width:52px;height:calc(100% - 6px);border-radius:50px 0 0 50px;background:linear-gradient(135deg,#050505 0%,#151515 60%,#1f1f1f 100%);display:flex;align-items:center;justify-content:center;color:#EF3340;font-size:18px;font-weight:700;line-height:1">→</span></a>
+      <p style="margin:14px 0 0;font-size:12.5px;line-height:1.5;color:rgba(244,239,232,.5)">Taahhüt yok. Fiyat, ödemeden önce teyit edilir.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="bea-sec" style="margin-top:64px;padding:34px 80px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+  <div style="display:flex;align-items:center;gap:14px">
+    <span style="font-weight:800;font-size:22px;letter-spacing:-.02em;line-height:1">bea<span style="color:#EF3340">.</span></span>
+    <span style="width:1px;height:22px;background:rgba(255,255,255,.14)"></span>
+    <span style="font-size:9px;font-weight:600;letter-spacing:.16em;line-height:1.5;color:rgba(244,239,232,.4);text-transform:uppercase">Satın alma stratejisi<br>İnce işler malzemeleri</span>
+  </div>
+  <div style="font-size:12px;color:rgba(244,239,232,.4)">Her satın almadan önceki ilk stratejik adım.</div>
+  <div style="font-size:11.5px;color:rgba(244,239,232,.3)">© BEA 2024 — Tüm hakları saklıdır</div>
+</footer>
+</div>
+
+<template id="__bundler_thumbnail" data-bg-color="#050505"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#050505"/><text x="50" y="60" font-family="Inter,system-ui,sans-serif" font-size="32" font-weight="800" fill="#F4EFE8" text-anchor="middle">bea<tspan fill="#EF3340">.</tspan></text></svg></template></x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    // Scroll-reveal: arm elements, then reveal as they enter the viewport.
+    // Safe by design — a fallback timeout reveals everything if IO never fires.
+    const arm = () => {
+      const els = document.querySelectorAll('.bea-reveal:not(.bea-armed):not(.bea-shown)');
+      els.forEach(e => e.classList.add('bea-armed'));
+      if (!('IntersectionObserver' in window)) { els.forEach(e => e.classList.add('bea-shown')); return; }
+      const io = new IntersectionObserver((ents) => {
+        ents.forEach(en => { if (en.isIntersecting) { en.target.classList.add('bea-shown'); io.unobserve(en.target); } });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      els.forEach(e => {
+        const r = e.getBoundingClientRect();
+        if (r.top < window.innerHeight * 0.92) { e.classList.add('bea-shown'); }
+        else io.observe(e);
+      });
+    };
+    arm();
+    // Hero device parallax — subtle rise + tilt as it enters view
+    const stage = document.getElementById('beaHeroStage');
+    if (stage && !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+      let ticking = false;
+      const upd = () => {
+        ticking = false;
+        const r = stage.getBoundingClientRect();
+        const vh = window.innerHeight || 800;
+        const p = Math.max(-1, Math.min(1, ((r.top + r.height / 2) - vh / 2) / vh));
+        stage.style.transform = 'translateY(' + (p * -20).toFixed(1) + 'px) rotateX(' + (p * 2.6).toFixed(2) + 'deg) scale(' + (1 - Math.abs(p) * 0.012).toFixed(4) + ')';
+      };
+      const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(upd); } };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      this._heroScroll = onScroll; upd();
+    }
+    // Hero grid — mouse parallax (subtle depth; disabled for reduced-motion & touch)
+    const grid = document.querySelector('.bea-herogrid');
+    if (grid && window.matchMedia && !window.matchMedia('(prefers-reduced-motion: reduce)').matches && window.matchMedia('(hover: hover)').matches) {
+      let gx = 0, gy = 0, tick = false;
+      const applyG = () => { tick = false; grid.style.transform = 'translate(' + gx.toFixed(1) + 'px,' + gy.toFixed(1) + 'px)'; };
+      const onMove = (e) => {
+        const w = window.innerWidth || 1, h = window.innerHeight || 1;
+        gx = ((e.clientX / w) - 0.5) * -52; // opposite to cursor = depth
+        gy = ((e.clientY / h) - 0.5) * -34;
+        if (!tick) { tick = true; requestAnimationFrame(applyG); }
+      };
+      grid.style.transition = 'transform .6s cubic-bezier(.16,1,.3,1)';
+      window.addEventListener('mousemove', onMove, { passive: true });
+      this._heroParallax = onMove;
+    }
+    // FAQ — single toggle: clicking the header opens all questions
+    const faqToggle = document.getElementById('bea-faqtoggle');
+    const faqPanel = document.getElementById('bea-faqpanel');
+    if (faqToggle && faqPanel) {
+      const setOpen = (open) => {
+        faqPanel.style.display = open ? 'grid' : 'none';
+        faqToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        const chev = faqToggle.querySelector('.bea-faqtoggle-chev');
+        if (chev) chev.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)';
+      };
+      faqToggle.addEventListener('click', () => setOpen(faqToggle.getAttribute('aria-expanded') !== 'true'));
+      setOpen(true);
+    }
+    this._t1 = setTimeout(arm, 500);
+    this._t2 = setTimeout(() => document.querySelectorAll('.bea-reveal').forEach(e => e.classList.add('bea-shown')), 4000);
+  }
+  componentWillUnmount() { clearTimeout(this._t1); clearTimeout(this._t2); if (this._heroScroll) { window.removeEventListener('scroll', this._heroScroll); window.removeEventListener('resize', this._heroScroll); } if (this._heroParallax) { window.removeEventListener('mousemove', this._heroParallax); } }
+}
+</script>
+<script src="/nav.js" defer></script>
+</body>
+</html>

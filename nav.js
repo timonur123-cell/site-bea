@@ -1,14 +1,23 @@
 /* Menu commun BEA — injecté sur les 6 pages.
    Remplace l'en-tête propre à chaque page par un menu identique partout. */
 (function () {
-  var PAGES = [
+  var TR = /^\/tr(\/|$)/.test(location.pathname);
+  var P = TR ? '/tr' : '';
+  var PAGES = TR ? [
+    { href: '/tr/diagnostic-strategique/', label: 'Ön Analiz', full: 'Stratejik Ön Analiz', group: '01 · Anla ve hazırla' },
+    { href: '/tr/etude-de-finition/', label: 'İnce İşler Etüdü', full: 'İnce İşler Etüdü', group: '01 · Anla ve hazırla' },
+    { href: '/tr/bibliotheque/', label: 'Kütüphane', full: 'Özel Kütüphane', group: '02 · Keşfet ve doğrula' },
+    { href: '/tr/immersion/', label: 'Yerinde Keşif', full: 'Türkiye & Çin Yerinde Keşif', group: '02 · Keşfet ve doğrula' },
+    { href: '/tr/pilotage-des-achats/', label: 'Satın Alma Yönetimi', full: 'Satın Alma Yönetimi', group: '03 · Uygula ve güvenceye al' }
+  ] : [
     { href: '/diagnostic-strategique/', label: 'Diagnostic', full: 'Diagnostic Stratégique', group: '01 · Comprendre et préparer' },
     { href: '/etude-de-finition/', label: 'Étude de finition', full: 'Étude de Finition', group: '01 · Comprendre et préparer' },
     { href: '/bibliotheque/', label: 'Bibliothèque', full: 'Bibliothèque Privée', group: '02 · Explorer et valider' },
     { href: '/immersion/', label: 'Immersion', full: 'Immersion Turquie & Chine', group: '02 · Explorer et valider' },
     { href: '/pilotage-des-achats/', label: 'Pilotage', full: 'Pilotage des achats', group: '03 · Exécuter et sécuriser' }
   ];
-  var CTA = { href: '/#contact', label: 'Analyser mon projet' };
+  var CTA = { href: P + '/#contact', label: TR ? 'Projemi analiz edin' : 'Analyser mon projet' };
+  var HOME = { href: P + '/', label: TR ? 'Ana sayfa' : 'Accueil' };
 
   function norm(p) { return (p || '/').replace(/index\.html$/, '').replace(/\/?$/, '/'); }
   var here = norm(location.pathname);
@@ -63,12 +72,12 @@
 
     nav.innerHTML =
       '<div class="bn-in">' +
-        '<a class="bn-logo" href="/" aria-label="BEA — accueil">bea<span>.</span></a>' +
+        '<a class="bn-logo" href="' + HOME.href + '" aria-label="BEA">bea<span>.</span></a>' +
         '<ul class="bn-links">' + links + '</ul>' +
         '<a class="bn-cta" href="' + CTA.href + '">' + CTA.label + '</a>' +
-        '<button class="bn-burger" type="button" aria-label="Ouvrir le menu" aria-expanded="false"><i></i><i></i><i></i></button>' +
+        '<button class="bn-burger" type="button" aria-label="Menu" aria-expanded="false"><i></i><i></i><i></i></button>' +
       '</div>' +
-      '<div class="bn-panel"><a class="bn-pl' + (here === '/' ? ' bn-on' : '') + '" href="/">Accueil</a>' + panel +
+      '<div class="bn-panel"><a class="bn-pl' + (here === norm(HOME.href) ? ' bn-on' : '') + '" href="' + HOME.href + '">' + HOME.label + '</a>' + panel +
         '<a class="bn-cta" href="' + CTA.href + '">' + CTA.label + '</a></div>';
     document.body.appendChild(nav);
 
@@ -85,8 +94,8 @@
     window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
     // « Analyser mon projet » sur l'accueil : défilement doux vers le formulaire
-    if (here === '/') {
-      nav.querySelectorAll('a[href="/#contact"]').forEach(function (a) {
+    if (here === norm(HOME.href)) {
+      nav.querySelectorAll('a[href="' + CTA.href + '"]').forEach(function (a) {
         a.addEventListener('click', function (e) {
           var t = document.getElementById('contact');
           if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
