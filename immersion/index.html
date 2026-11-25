@@ -221,6 +221,19 @@
     .jt-on { color:var(--white);background:rgba(239,51,64,.1);border-color:rgba(239,51,64,.55); }
     .jt-on .jt-tab-price { color:var(--red);opacity:1;font-weight:600; }
     .jt-panel { max-width:720px;margin:0 auto; }
+    .jt-card { background:#111112;border:1px solid var(--brd);border-radius:20px;padding:clamp(24px,3vw,36px);animation:jtIn 420ms cubic-bezier(.2,.7,.2,1); }
+    .jt-sum { font-size:clamp(16px,1.4vw,19px);font-weight:600;color:var(--white);letter-spacing:-.01em;line-height:1.45;margin:0 0 20px;text-wrap:pretty; }
+    .jt-sum em { font-style:normal;color:var(--red); }
+    .jt-chips { display:flex;flex-wrap:wrap;gap:8px;margin:0 0 4px; }
+    .jt-chip { display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:500;color:rgba(244,239,232,.82);background:rgba(255,255,255,.04);border:1px solid var(--brd);border-radius:50px;padding:7px 14px; }
+    .jt-chip b { font-weight:700;color:var(--red);font-size:11px;letter-spacing:.08em; }
+    .jt-more { margin-top:22px;border-top:1px solid var(--brd);padding-top:6px; }
+    .jt-more > summary { list-style:none;cursor:pointer;display:inline-flex;align-items:center;gap:10px;padding:14px 0 4px;font-size:14px;font-weight:600;color:var(--white);transition:color 220ms ease; }
+    .jt-more > summary::-webkit-details-marker { display:none; }
+    .jt-more > summary:hover { color:rgba(255,255,255,.72); }
+    .jt-more .jt-ico { width:22px;height:22px;border-radius:50%;border:1px solid rgba(239,51,64,.55);display:inline-flex;align-items:center;justify-content:center;color:var(--red);font-size:14px;line-height:1;transition:transform 300ms cubic-bezier(.4,0,.2,1); }
+    .jt-more[open] .jt-ico { transform:rotate(45deg); }
+    .jt-more .jt-line { margin-top:22px; }
     .jt-line { position:relative;padding-left:36px;animation:jtIn 420ms cubic-bezier(.2,.7,.2,1); }
     .jt-line::before { content:"";position:absolute;left:7px;top:8px;bottom:8px;width:1px;background:linear-gradient(to bottom,var(--red),rgba(239,51,64,.3) 45%,rgba(255,255,255,.08)); }
     @keyframes jtIn { from { opacity:0;transform:translateY(10px); } to { opacity:1;transform:none; } }
@@ -255,6 +268,10 @@
     .pr-ideal span { display:block;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--red);margin-bottom:6px; }
     .pr-cta { display:flex;align-items:center;justify-content:space-between;width:100%;padding:15px 22px;border-radius:50px;border:1px solid rgba(255,255,255,.18);background:transparent;color:var(--white);font-family:inherit;font-size:14px;font-weight:600;cursor:pointer;transition:all 250ms ease; }
     .pr-cta:hover { border-color:var(--red);background:rgba(239,51,64,.12); }
+    .pr-facts { list-style:none;margin:0 0 22px;padding:16px 0 0;border-top:1px solid rgba(255,255,255,.08);display:flex;flex-direction:column;gap:9px; }
+    .pr-facts li { display:flex;align-items:center;gap:10px;font-size:13.5px;line-height:1.4;color:rgba(255,255,255,.82); }
+    .pr-facts li::before { content:"";width:6px;height:6px;border-radius:50%;background:var(--red);flex-shrink:0; }
+    .pr-note { max-width:760px;margin:clamp(28px,3.5vw,40px) auto 0;padding:18px 24px;border:1px solid var(--brd);border-radius:16px;background:#0d0d0e;font-size:14px;line-height:1.7;color:rgba(244,239,232,.8);text-align:center;text-wrap:pretty; }
     .pr-featured .pr-cta { background:var(--red);border-color:var(--red); }
     .pr-featured .pr-cta:hover { box-shadow:0 0 30px rgba(239,51,64,.5); }
     .pr-arrow { transition:transform 250ms ease; }
@@ -634,36 +651,30 @@
   <div style="position:relative;max-width:1240px;margin:0 auto">
     <div class="sp-head">
       <h2 data-reveal style="font-size:clamp(28px,4.4vw,56px);font-weight:700;line-height:1.08;letter-spacing:-.025em;color:var(--white);margin:0;text-wrap:balance">
-        Certains choix ne se font pas <em style="font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:700;color:var(--red)">derrière un écran</em>.
+        Certains choix méritent d'être faits <em style="font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:700;color:var(--red)">sur place</em>.
       </h2>
       <p data-reveal style="font-size:clamp(15px,1.15vw,17px);line-height:1.8;color:var(--dim);margin:0;text-wrap:pretty">
-        Textures, finitions, qualité réelle : certains détails doivent être appréciés sur place.
+        Photos, catalogues et fiches techniques permettent de préparer vos décisions. Mais rien ne remplace l'expérience directe des matériaux et des fabricants.
       </p>
     </div>
-    <div data-stagger-parent class="sp-grid sp-grid-4">
+    <div data-stagger-parent class="sp-grid">
       <article data-stagger class="sp-card">
-        <div class="sp-media"><img src="uploads/PHOTO-2026-07-08-17-13-45.jpg" alt="" style="object-position:50% 40%"><span class="sp-num">01</span></div>
+        <div class="sp-media"><img src="uploads/PHOTO-2026-07-08-20-01-23.jpg" alt="" style="object-position:50% 42%"><span class="sp-num">01</span></div>
         <div class="sp-line"></div>
-        <h3 class="sp-title">Découvrir les produits</h3>
-        <p class="sp-text">Explorez les collections, les dimensions et les finitions disponibles.</p>
+        <h3 class="sp-title">Voir et comparer</h3>
+        <p class="sp-text">Découvrez les matériaux, appréciez les finitions et comparez les différentes gammes de qualité.</p>
       </article>
       <article data-stagger class="sp-card sp-offset">
-        <div class="sp-media"><img src="uploads/PHOTO-2026-07-08-17-08-10.jpg" alt="" style="object-position:50% 35%"><span class="sp-num">02</span></div>
+        <div class="sp-media"><img src="uploads/PHOTO-2026-07-08-17-34-01.jpg" alt="" style="object-position:50% 45%"><span class="sp-num">02</span></div>
         <div class="sp-line"></div>
-        <h3 class="sp-title">Apprécier la qualité</h3>
-        <p class="sp-text">Examinez les matériaux, leurs textures et leurs caractéristiques réelles.</p>
+        <h3 class="sp-title">Rencontrer les fabricants</h3>
+        <p class="sp-text">Échangez directement avec les fabricants pour mieux comprendre leurs produits, leurs possibilités de personnalisation et leurs conditions de production.</p>
       </article>
       <article data-stagger class="sp-card">
-        <div class="sp-media"><img src="uploads/PHOTO-2026-07-08-20-01-23.jpg" alt="" style="object-position:50% 42%"><span class="sp-num">03</span></div>
+        <div class="sp-media"><img src="uploads/PHOTO-2026-07-08-17-08-10.jpg" alt="" style="object-position:50% 35%"><span class="sp-num">03</span></div>
         <div class="sp-line"></div>
-        <h3 class="sp-title">Comparer les gammes</h3>
-        <p class="sp-text">Évaluez les différences de qualité, de conception et de finition.</p>
-      </article>
-      <article data-stagger class="sp-card sp-offset">
-        <div class="sp-media"><img src="uploads/PHOTO-2026-07-08-17-34-01.jpg" alt="" style="object-position:50% 45%"><span class="sp-num">04</span></div>
-        <div class="sp-line"></div>
-        <h3 class="sp-title">Échanger avec les fabricants</h3>
-        <p class="sp-text">Comprenez les prix, les possibilités de personnalisation et les conditions de fabrication.</p>
+        <h3 class="sp-title">Valider vos choix</h3>
+        <p class="sp-text">Confrontez vos sélections à la réalité du terrain pour prendre des décisions plus éclairées avant vos achats.</p>
       </article>
     </div>
   </div>
@@ -695,25 +706,21 @@
         <div data-stagger class="fb-item">
           <span class="fb-num">02</span>
           <div>
-            <h3 class="fb-title">Maîtrisez les conditions d'achat</h3>
-            <p class="fb-text">Prix, quantités minimales, personnalisation et délais de production.</p>
+            <h3 class="fb-title">Maîtrisez vos conditions d'achat</h3>
+            <p class="fb-text">Comparez les prix, les quantités minimales, les délais et les possibilités de personnalisation.</p>
           </div>
         </div>
         <div data-stagger class="fb-item">
           <span class="fb-num">03</span>
           <div>
-            <h3 class="fb-title">Découvrez de nouvelles opportunités</h3>
-            <p class="fb-text">Explorez des solutions et des possibilités que vous n'auriez pas nécessairement identifiées seul.</p>
+            <h3 class="fb-title">Identifiez de nouvelles opportunités</h3>
+            <p class="fb-text">Découvrez des matériaux et des solutions adaptés à vos exigences et à votre budget.</p>
           </div>
         </div>
         </div>
       </div>
     </div>
     <!-- Conviction -->
-    <div data-reveal class="fb-conviction">
-      <div style="font-size:11px;font-weight:600;letter-spacing:.24em;color:var(--red);margin-bottom:14px">NOTRE CONVICTION</div>
-      <p style="font-size:clamp(17px,1.6vw,22px);font-weight:500;line-height:1.5;letter-spacing:-.01em;color:var(--white);margin:0;text-wrap:balance">Le meilleur achat n'est pas le moins cher. C'est celui qui offre le meilleur équilibre entre qualité, prix et exigences de votre projet.</p>
-    </div>
   </div>
 </section>
 
@@ -725,42 +732,39 @@
   <div class="tl-wrap">
     <div class="tl-head">
       <h2 data-reveal style="font-size:clamp(28px,4vw,52px);font-weight:700;line-height:1.08;letter-spacing:-.025em;color:var(--white);margin:0 0 22px">
-        Votre projet.<br>Votre programme.<br><em style="font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:700;color:var(--red)">Notre accompagnement.</em>
+        Une Immersion organisée <em style="font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:700;color:var(--red)">autour de votre projet</em>.
       </h2>
     </div>
     <div data-stagger-parent class="tl-list">
         <div data-stagger class="tl-step">
           <div class="tl-dot"><span>01</span></div>
           <div class="tl-body">
-            <h3 class="tl-title">Nous définissons vos priorités</h3>
-            <p class="tl-text">Identification des matériaux recherchés, du budget et des exigences du projet.</p>
+            <h3 class="tl-title">Préparation</h3>
+            <p class="tl-text">Nous analysons vos besoins, votre budget et les catégories de matériaux recherchées.</p>
           </div>
         </div>
         <div data-stagger class="tl-step">
           <div class="tl-dot"><span>02</span></div>
           <div class="tl-body">
-            <h3 class="tl-title">Nous préparons votre programme</h3>
-            <p class="tl-text">Sélection des fabricants, prise de rendez-vous et organisation des visites.</p>
+            <h3 class="tl-title">Organisation</h3>
+            <p class="tl-text">Nous sélectionnons les fabricants et préparons un programme de visites adapté à vos priorités.</p>
           </div>
         </div>
         <div data-stagger class="tl-step">
           <div class="tl-dot"><span>03</span></div>
           <div class="tl-body">
-            <h3 class="tl-title">Nous vous accompagnons sur place</h3>
-            <p class="tl-text">Visites, échanges avec les fabricants et conseils dans vos choix.</p>
+            <h3 class="tl-title">Accompagnement sur place</h3>
+            <p class="tl-text">Notre équipe vous accompagne dans les showrooms et usines pour comparer les produits, échanger avec les fabricants et faciliter vos décisions.</p>
           </div>
         </div>
         <div data-stagger class="tl-step">
           <div class="tl-dot"><span>04</span></div>
           <div class="tl-body">
-            <h3 class="tl-title">Nous vous remettons une synthèse</h3>
-            <p class="tl-text">Un rapport regroupant les références étudiées, les choix effectués et les prochaines étapes.</p>
+            <h3 class="tl-title">Synthèse de l'Immersion</h3>
+            <p class="tl-text">Vous recevez un rapport récapitulant les fabricants rencontrés, les références étudiées, les informations tarifaires disponibles et les prochaines étapes.</p>
           </div>
         </div>
     </div>
-  </div>
-  <div data-reveal class="fb-conviction" style="max-width:760px">
-    <p style="font-size:clamp(18px,1.8vw,24px);font-weight:600;line-height:1.4;letter-spacing:-.01em;color:var(--white);margin:0;text-wrap:balance">Moins de visites inutiles. <em style="font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:700;color:var(--red)">Plus de temps consacré aux bons fabricants.</em></p>
   </div>
 </section>
 
@@ -787,6 +791,11 @@
 
     <div class="jt-panel">
       <sc-if value="{{ jt1 }}" hint-placeholder-val="{{ true }}">
+        <div class="jt-card">
+          <p class="jt-sum"><em>L'essentiel.</em> Une première exploration des gammes et des fabricants.</p>
+          <div class="jt-chips"><span class="jt-chip"><b>J1</b>Menuiseries aluminium</span><span class="jt-chip"><b>J2</b>Carrelages &amp; portes</span></div>
+          <details class="jt-more">
+            <summary><span class="jt-ico">+</span>Voir le programme détaillé</summary>
         <div class="jt-line">
           <div class="jt-step">
             <div class="jt-dot"></div>
@@ -807,8 +816,15 @@
             <ul class="jt-ul"><li>Découverte des collections de carrelage.</li><li>Comparaison des formats, textures et gammes.</li><li>Visites de fabricants de portes intérieures et extérieures.</li><li>Bilan des visites et des choix effectués.</li></ul>
           </div>
         </div>
+          </details>
+        </div>
       </sc-if>
       <sc-if value="{{ jt2 }}" hint-placeholder-val="{{ false }}">
+        <div class="jt-card">
+          <p class="jt-sum"><em>Approfondi.</em> Une comparaison détaillée de plusieurs familles de matériaux.</p>
+          <div class="jt-chips"><span class="jt-chip"><b>J1</b>Menuiseries</span><span class="jt-chip"><b>J2</b>Carrelages</span><span class="jt-chip"><b>J3</b>Portes &amp; intérieurs</span><span class="jt-chip"><b>J4</b>Équipements</span></div>
+          <details class="jt-more">
+            <summary><span class="jt-ico">+</span>Voir le programme détaillé</summary>
         <div class="jt-line">
           <div class="jt-step">
             <div class="jt-dot"></div>
@@ -835,8 +851,15 @@
             <p class="jt-text">Sanitaires, robinetterie, luminaires et autres matériaux prioritaires, suivis d'une synthèse.</p>
           </div>
         </div>
+          </details>
+        </div>
       </sc-if>
       <sc-if value="{{ jt3 }}" hint-placeholder-val="{{ false }}">
+        <div class="jt-card">
+          <p class="jt-sum"><em>Grand choix.</em> Une exploration étendue des pôles de fabrication chinois.</p>
+          <div class="jt-chips"><span class="jt-chip"><b>J1</b>Orientation</span><span class="jt-chip"><b>J2</b>Revêtements</span><span class="jt-chip"><b>J3</b>Sur mesure</span><span class="jt-chip"><b>J4</b>Équipements</span><span class="jt-chip"><b>J5</b>Synthèse</span></div>
+          <details class="jt-more">
+            <summary><span class="jt-ico">+</span>Voir le programme détaillé</summary>
         <div class="jt-line">
           <div class="jt-step">
             <div class="jt-dot"></div>
@@ -869,6 +892,8 @@
             <p class="jt-text">Dernières visites ciblées, consolidation des observations et définition des prochaines étapes.</p>
           </div>
         </div>
+          </details>
+        </div>
       </sc-if>
     </div>
 
@@ -897,6 +922,7 @@
         <div class="pr-price">500<span> €</span></div>
         <h3 class="pr-promise">L'essentiel, en deux jours.</h3>
         <p class="pr-desc">Un parcours ciblé pour découvrir les fabricants et valider vos premières sélections.</p>
+        <ul class="pr-facts"><li>2 jours sur place</li><li>X participants inclus</li><li>Accompagnement BEA sur place</li></ul>
         <div class="pr-ideal"><span>Idéal pour</span>Les projets aux besoins précis, portant sur un nombre limité de catégories de matériaux.</div>
         <button class="pr-cta" onClick="{{ goContact }}">Préparer mon immersion<span class="pr-arrow">→</span></button>
       </article>
@@ -907,6 +933,7 @@
         <div class="pr-price">1 000<span> €</span></div>
         <h3 class="pr-promise">Explorez davantage de possibilités.</h3>
         <p class="pr-desc">Un parcours approfondi pour comparer plusieurs familles de matériaux et affiner vos choix.</p>
+        <ul class="pr-facts"><li>4 jours sur place</li><li>X participants inclus</li><li>Accompagnement BEA sur place</li></ul>
         <div class="pr-ideal"><span>Idéal pour</span>Les projets nécessitant une exploration plus large et plusieurs arbitrages techniques ou budgétaires.</div>
         <button class="pr-cta" onClick="{{ goContact }}">Préparer mon immersion<span class="pr-arrow">→</span></button>
       </article>
@@ -917,6 +944,7 @@
         <div class="pr-price">1 500<span> €</span></div>
         <h3 class="pr-promise">Accédez à un marché aux possibilités exceptionnelles.</h3>
         <p class="pr-desc">Explorez une grande diversité de fabricants, de matériaux et de solutions personnalisables.</p>
+        <ul class="pr-facts"><li>5 jours sur place</li><li>X participants inclus</li><li>Accompagnement BEA sur place</li></ul>
         <div class="pr-ideal"><span>Idéal pour</span>Les projets volumineux, les exigences architecturales spécifiques ou les besoins de personnalisation.</div>
         <button class="pr-cta" onClick="{{ goContact }}">Préparer mon immersion<span class="pr-arrow">→</span></button>
       </article>
@@ -931,7 +959,8 @@
           <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#EF3340" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Accompagnement physique BEA pendant toute la durée du programme.</span></div>
           <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#EF3340" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Conseils et comparaisons des solutions sur place.</span></div>
           <div class="pr-inc-item"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="flex-shrink:0;margin-top:3px"><path d="M3.5 8.5l3 3 6-7" stroke="#EF3340" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Rapport de synthèse après votre Immersion.</span></div>
-        </div></div>
+        </div>
+        <p style="margin:20px 0 0;padding-top:16px;border-top:1px solid var(--brd);font-size:13.5px;line-height:1.7;color:rgba(244,239,232,.78);text-wrap:pretty">L'organisation des déplacements locaux entre les fabricants et showrooms est incluse dans notre accompagnement. Les frais de transport, d'hébergement et les dépenses personnelles restent à votre charge et sont précisés avant la réservation.</p></div>
       </details>
       <details class="faq">
         <summary class="faq-q">Modalités et conditions de réservation<span class="faq-ic"></span></summary>
@@ -940,7 +969,7 @@
           <p style="margin:0 0 18px">50 % à la réservation, 50 % avant le début de l'Immersion. Paiement intégral possible dès la réservation.</p>
           <div class="pr-term-t">Frais non inclus</div>
           <p style="margin:0 0 6px">Vols, hébergement, repas, visas et dépenses personnelles.</p>
-          <p style="margin:0">Les frais de déplacement locaux sont communiqués avant la réservation.</p>
+          <p style="margin:0">Les déplacements locaux entre fabricants et showrooms sont organisés par BEA ; les frais de transport restent à votre charge et sont communiqués avant la réservation.</p>
         </div>
       </details>
     </div>
@@ -956,14 +985,20 @@
     <div class="cr-wrap">
       <div>
         <h2 data-reveal style="font-size:clamp(28px,4vw,52px);font-weight:700;line-height:1.08;letter-spacing:-.025em;color:var(--white);margin:0 0 22px">
-          Votre Immersion.<br><em style="font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:700;color:var(--red)">Un premier pas vers vos achats.</em>
+          Vos choix sont validés.<br><em style="font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:700;color:var(--red)">Confiez-nous leur exécution.</em>
         </h2>
         <p data-reveal style="font-size:clamp(15px,1.1vw,17px);line-height:1.8;color:var(--dim);margin:0 0 32px;text-wrap:pretty">
-          Votre Immersion ne se limite pas à la découverte des fabricants. Elle peut également s'inscrire dans la continuité de votre projet avec BEA.
+          Après votre Immersion, BEA peut prendre en charge la coordination de vos commandes, le suivi de production, le contrôle qualité physique, la consolidation et l'expédition de vos matériaux.
         </p>
         <div data-reveal class="cr-highlight">
           <div class="cr-big">30<span>%</span></div>
           <p>du prix de votre Immersion peuvent être déduits de nos honoraires de <strong style="color:var(--white);font-weight:600">Pilotage des achats</strong>.</p>
+        </div>
+        <div data-reveal style="margin-top:32px">
+          <button class="split-cta" data-split-cta="" onClick="{{ goContact }}">
+            <div class="split-cta-badge"><span class="split-cta-arrow">→</span></div>
+            Découvrir le Pilotage des achats
+          </button>
         </div>
       </div>
       <div>
@@ -1031,22 +1066,14 @@
 
   <div style="position:relative;z-index:2;max-width:600px;margin:0 auto">
 
-    <!-- Portrait + overlay -->
-    <div data-reveal="" style="position:relative;border-radius:28px;overflow:hidden">
-      <img src="uploads/portrait-cta.png" alt="" style="width:100%;display:block;object-fit:cover">
-      <!-- Dégradé bas pour lisibilité -->
-      <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,transparent 30%,rgba(5,5,5,.55) 62%,rgba(5,5,5,.94) 100%)"></div>
-
-      <!-- Contenu superposé -->
-      <div style="position:absolute;left:0;right:0;bottom:0;padding:0 28px 96px;text-align:center">
-        <h2 style="font-size:clamp(26px,6vw,40px);font-weight:800;line-height:1.08;letter-spacing:-.025em;color:var(--white);margin:0 auto 14px;text-wrap:balance">
-          Votre prochain projet mérite <em style="font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:700;color:var(--red)">plus qu'un catalogue.</em>
-        </h2>
-        <p style="font-size:clamp(14px,1.1vw,16px);line-height:1.65;color:rgba(244,239,232,.75);max-width:440px;margin:0 auto;text-wrap:pretty">Rencontrez les fabricants, découvrez les matériaux et avancez dans vos décisions d'achat avec BEA à vos côtés.</p>
-      </div>
+    <div data-reveal="" style="text-align:center">
+      <h2 style="font-size:clamp(28px,4.4vw,56px);font-weight:800;line-height:1.08;letter-spacing:-.025em;color:var(--white);margin:0 auto 18px;text-wrap:balance">
+        Votre prochain projet mérite <em style="font-family:'Playfair Display',Georgia,serif;font-style:italic;font-weight:700;color:var(--red)">plus qu'un catalogue.</em>
+      </h2>
+      <p style="font-size:clamp(15px,1.15vw,17px);line-height:1.7;color:rgba(244,239,232,.75);max-width:460px;margin:0 auto;text-wrap:pretty">Rencontrez les fabricants, découvrez les matériaux et avancez dans vos décisions d'achat avec BEA à vos côtés.</p>
     </div>
 
-    <div data-reveal="" style="position:relative;margin-top:-64px;text-align:center;z-index:3">
+    <div data-reveal="" style="position:relative;margin-top:36px;text-align:center;z-index:3">
       <button class="split-cta" data-split-cta="" onClick="{{ goContact }}">
         <div class="split-cta-badge"><span class="split-cta-arrow">→</span></div>
         Préparer mon immersion

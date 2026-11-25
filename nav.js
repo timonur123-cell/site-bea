@@ -2,11 +2,11 @@
    Remplace l'en-tête propre à chaque page par un menu identique partout. */
 (function () {
   var PAGES = [
-    { href: '/diagnostic-strategique/', label: 'Diagnostic', full: 'Diagnostic Stratégique', group: 'Préparer et décider' },
-    { href: '/etude-de-finition/', label: 'Étude de finition', full: 'Étude de Finition', group: 'Préparer et décider' },
-    { href: '/bibliotheque/', label: 'Bibliothèque', full: 'Bibliothèque Privée', group: 'Préparer et décider' },
-    { href: '/immersion/', label: 'Immersion', full: 'Immersion Turquie & Chine', group: 'Valider et exécuter' },
-    { href: '/pilotage-des-achats/', label: 'Pilotage', full: 'Pilotage des achats', group: 'Valider et exécuter' }
+    { href: '/diagnostic-strategique/', label: 'Diagnostic', full: 'Diagnostic Stratégique', group: '01 · Comprendre et préparer' },
+    { href: '/etude-de-finition/', label: 'Étude de finition', full: 'Étude de Finition', group: '01 · Comprendre et préparer' },
+    { href: '/bibliotheque/', label: 'Bibliothèque', full: 'Bibliothèque Privée', group: '02 · Explorer et valider' },
+    { href: '/immersion/', label: 'Immersion', full: 'Immersion Turquie & Chine', group: '02 · Explorer et valider' },
+    { href: '/pilotage-des-achats/', label: 'Pilotage', full: 'Pilotage des achats', group: '03 · Exécuter et sécuriser' }
   ];
   var CTA = { href: '/#contact', label: 'Analyser mon projet' };
 
